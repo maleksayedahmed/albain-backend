@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // category name in Arabic
-            $table->softDeletes();
+            $table->string('title');
+            $table->text('description');
+            
             $table->timestamps();
+            //should have a media collection for the image using spatie media library
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('sliders');
     }
-};
+}; 

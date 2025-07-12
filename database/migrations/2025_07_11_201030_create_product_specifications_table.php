@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->string('specification_key'); // like "thickness", "dimensions", etc.
             $table->string('specification_value'); // the actual value
+            $table->softDeletes();
             $table->timestamps();
         });
     }

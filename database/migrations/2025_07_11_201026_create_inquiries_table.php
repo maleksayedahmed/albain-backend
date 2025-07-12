@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email'); // email address
             $table->string('subject'); // inquiry subject
             $table->text('message'); // inquiry message
+            $table->softDeletes();
             $table->timestamps();
         });
     }

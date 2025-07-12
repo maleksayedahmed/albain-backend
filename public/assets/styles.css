@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Janna LT';
+    src: url('fonts/JannaLT-Regular.woff2') format('woff2'),
+        url('fonts/JannaLT-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Janna LT', sans-serif;
+}

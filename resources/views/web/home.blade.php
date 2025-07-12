@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Albain</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="assets/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="node_modules/intl-tel-input/build/css/intlTelInput.css">
+    <link href="{{ asset('assets/styles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('node_modules/intl-tel-input/build/css/intlTelInput.css') }}">
     <style>
         @keyframes marquee {
             0% {
@@ -30,6 +30,16 @@
             justify-content: space-around;
             min-width: 100%;
         }
+
+        .albain-search-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: auto;
+            z-index: 50;
+            min-width: 100%;
+            margin-top: 0.25rem;
+        }
     </style>
 </head>
 
@@ -44,15 +54,17 @@
 
                 <!-- Left side elements -->
                 <div class="hidden md:flex items-center gap-x-4 flex-row-reverse">
-                    <a href="#"
+                    <a href="#contact"
                         class="flex bg-gradient-to-r from-[#306A8E] to-[#0E1E28] text-white px-5 py-2.5 rounded-lg items-center gap-x-2 whitespace-nowrap hover:shadow-lg transition-all duration-300">
-                        <img src="assets/images/whatsapp-icon.svg" alt="WhatsApp" class="h-6 w-6">
+                        <img src="{{ asset('assets/images/whatsapp-icon.svg') }}" alt="WhatsApp" class="h-6 w-6">
                         <span>تواصل معنا الآن</span>
                     </a>
-                    <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
-                        <input type="text" placeholder="عن ماذا تبحث"
-                            class="bg-transparent focus:outline-none text-right w-48 pr-2">
-                        <img src="assets/images/search-icon.svg" alt="Search" class="h-5 w-5">
+                    <div class="relative">
+                        <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
+                            <input type="text" placeholder="عن ماذا تبحث"
+                                class="bg-transparent focus:outline-none text-right w-48 pr-2">
+                            <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search" class="h-5 w-5">
+                        </div>
                     </div>
                 </div>
 
@@ -65,22 +77,23 @@
                 <!-- Right side elements -->
                 <div class="flex items-center gap-x-12 flex-row-reverse">
                     <nav class="hidden md:flex items-center gap-x-8 flex-row-reverse">
-                        <a href="#" class="text-gray-800 hover:text-blue-600 font-medium transition-colors">من
+                        <a href="{{ route('web.who_us') }}"
+                            class="{{ request()->routeIs('web.who_us') ? 'text-blue-700 font-bold relative pb-2 after:content-[\'\'] after:absolute after:bottom-0 after:right-0 after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-[#29698C] after:to-[#4AA0B6]' : 'text-gray-800 hover:text-blue-600 font-medium transition-colors' }}">من
                             نحن</a>
-                        <a href="#"
-                            class="text-gray-800 hover:text-blue-600 font-medium transition-colors">منتجاتنا</a>
-                        <a href="#"
-                            class="text-blue-700 font-bold relative pb-2 after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-[#29698C] after:to-[#4AA0B6]">الرئيسية</a>
+                        <a href="{{ route('web.products') }}"
+                            class="{{ request()->routeIs('web.products') ? 'text-blue-700 font-bold relative pb-2 after:content-[\'\'] after:absolute after:bottom-0 after:right-0 after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-[#29698C] after:to-[#4AA0B6]' : 'text-gray-800 hover:text-blue-600 font-medium transition-colors' }}">منتجاتنا</a>
+                        <a href="{{ route('web.home') }}"
+                            class="{{ request()->routeIs('web.home') ? 'text-blue-700 font-bold relative pb-2 after:content-[\'\'] after:absolute after:bottom-0 after:right-0 after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-[#29698C] after:to-[#4AA0B6]' : 'text-gray-800 hover:text-blue-600 font-medium transition-colors' }}">الرئيسية</a>
                     </nav>
                     <div class="flex-shrink-0">
                         <a href="#">
-                            <img src="assets/images/logo.svg" alt="Albain Logo" class="h-16">
+                            <img src="{{ asset('assets/images/logo.svg') }}" alt="Albain Logo" class="h-16">
                         </a>
                     </div>
                 </div>
 
                 <!-- Mobile: Logo and Menu Button -->
-                <div class="md:hidden flex justify-between w-full items-center">
+                {{-- <div class="md:hidden flex justify-between w-full items-center">
                     <button id="menu-open-btn" class="text-gray-800 focus:outline-none">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -93,49 +106,14 @@
                             <img src="assets/images/logo.svg" alt="Albain Logo" class="h-16">
                         </a>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
     </header>
 
     <!-- MOBILE MENU (SLIDE-IN) & OVERLAY -->
-    <div id="menu-overlay" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50"></div>
-    <div id="mobile-menu"
-        class="fixed top-0 -right-full md:hidden h-full w-4/5 max-w-sm bg-white shadow-xl z-50 p-6 transition-all duration-300 ease-in-out">
-        <div class="flex justify-between items-center mb-8">
-            <a href="#">
-                <img src="assets/images/logo.svg" alt="Albain Logo" class="h-14">
-            </a>
-            <button id="menu-close-btn" class="text-gray-600 hover:text-gray-900">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
-                </svg>
-            </button>
-        </div>
-        <div class="mb-6">
-            <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2">
-                <input type="text" placeholder="عن ماذا تبحث"
-                    class="bg-transparent focus:outline-none text-right w-full">
-                <img src="assets/images/search-icon.svg" alt="Search" class="h-5 w-5">
-            </div>
-        </div>
-        <nav class="flex flex-col gap-y-4 text-lg">
-            <a href="#" class="text-blue-600 font-bold w-full py-2">الرئيسية</a>
-            <a href="#" class="text-gray-700 hover:text-blue-600 font-medium w-full py-2">منتجاتنا</a>
-            <a href="#" class="text-gray-700 hover:text-blue-600 font-medium w-full py-2">من نحن</a>
-        </nav>
-        <div class="mt-8 pt-6 border-t border-gray-200">
-            <a href="#"
-                class="bg-gradient-to-r from-blue-800 to-blue-900 text-white px-6 py-3 rounded-lg flex items-center justify-center gap-x-2 w-full">
-                <span>تواصل معنا الآن</span>
-                <img src="assets/images/whatsapp-icon.svg" alt="WhatsApp" class="h-6 w-6">
-            </a>
-        </div>
-    </div>
-    <!-- HEADER SECTION END -->
+    <!-- Removed mobile menu and overlay -->
 
     <main>
         <!-- HERO SLIDER SECTION -->
@@ -149,7 +127,7 @@
                     <div id="slide-container" class="flex transition-transform duration-700 ease-in-out">
                         <!-- Slide 1 -->
                         <div class="hero-slide w-full flex-shrink-0 h-[600px] bg-cover bg-center relative"
-                            style="background-image: url('assets/images/hero-background.png');">
+                            style="background-image: url('{{ asset('assets/images/hero-background.png') }}');">
                             <div
                                 class="absolute inset-0 bg-gradient-to-l from-transparent via-[#2a4e62]/50 to-[#2a4e62]/80">
                             </div>
@@ -161,7 +139,7 @@
                                     <p class="mt-4 text-lg text-gray-200">أدوات مكتبية • مستلزمات طبية • معدات كهربائية
                                         • منتجات نظافة • وأكثر!</p>
                                     <div class="mt-10">
-                                        <a href="#"
+                                        <a href="#contact"
                                             class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
                                             <span>تواصل معنا الآن</span>
                                             <span class="bg-[#2a4e62] rounded-full p-2">
@@ -180,7 +158,7 @@
                         </div>
                         <!-- Slide 2 -->
                         <div class="hero-slide w-full flex-shrink-0 h-[600px] bg-cover bg-center relative"
-                            style="background-image: url('assets/images/hero-background.png');">
+                            style="background-image: url('{{ asset('assets/images/hero-background.png') }}');">
                             <div
                                 class="absolute inset-0 bg-gradient-to-l from-transparent via-[#2a4e62]/50 to-[#2a4e62]/80">
                             </div>
@@ -192,7 +170,7 @@
                                     <p class="mt-4 text-lg text-gray-200">من الأساسات إلى التشطيبات، نوفر مواد بناء
                                         موثوقة تلبي كافة المعايير.</p>
                                     <div class="mt-10">
-                                        <a href="#"
+                                        <a href="#contact"
                                             class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
                                             <span>تواصل معنا الآن</span>
                                             <span class="bg-[#2a4e62] rounded-full p-2">
@@ -211,7 +189,7 @@
                         </div>
                         <!-- Slide 3 -->
                         <div class="hero-slide w-full flex-shrink-0 h-[600px] bg-cover bg-center relative"
-                            style="background-image: url('assets/images/hero-background.png');">
+                            style="background-image: url('{{ asset('assets/images/hero-background.png') }}');">
                             <div
                                 class="absolute inset-0 bg-gradient-to-l from-transparent via-[#2a4e62]/50 to-[#2a4e62]/80">
                             </div>
@@ -223,7 +201,7 @@
                                     <p class="mt-4 text-lg text-gray-200">تجهيزات عيادات ومستشفيات بأعلى جودة لضمان
                                         سلامة المرضى والكادر الطبي.</p>
                                     <div class="mt-10">
-                                        <a href="#"
+                                        <a href="#contact"
                                             class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
                                             <span>تواصل معنا الآن</span>
                                             <span class="bg-[#2a4e62] rounded-full p-2">
@@ -242,7 +220,7 @@
                         </div>
                         <!-- Slide 4 -->
                         <div class="hero-slide w-full flex-shrink-0 h-[600px] bg-cover bg-center relative"
-                            style="background-image: url('assets/images/hero-background.png');">
+                            style="background-image: url('{{ asset('assets/images/hero-background.png') }}');">
                             <div
                                 class="absolute inset-0 bg-gradient-to-l from-transparent via-[#2a4e62]/50 to-[#2a4e62]/80">
                             </div>
@@ -254,7 +232,7 @@
                                     <p class="mt-4 text-lg text-gray-200">كل ما تحتاجه بيئة عملك من قرطاسية وأجهزة
                                         لتنظيم مهامك اليومية.</p>
                                     <div class="mt-10">
-                                        <a href="#"
+                                        <a href="#contact"
                                             class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
                                             <span>تواصل معنا الآن</span>
                                             <span class="bg-[#2a4e62] rounded-full p-2">
@@ -322,7 +300,7 @@
                     <div
                         class="w-16 h-16  bg-black rounded-full border-2 border-black flex items-center justify-center">
                         <div class="w-full h-full rounded-full  flex items-center justify-center">
-                            <a href="#"
+                            <a href="#contact"
                                 class="w-12 h-12 bg-blue-900 rounded-full    flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-teal-400" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -339,8 +317,8 @@
         </section>
 
         <!-- Floating WhatsApp Button -->
-        <a href="#"
-            class="fixed bottom-6 left-6 z-40 w-16 h-16 rounded-full bg-[#2AA25A] flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform duration-300">
+        <a href="#contact"
+            class="fixed bottom-24 left-6 z-40 w-16 h-16 rounded-full bg-[#2AA25A] flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform duration-300">
             <img src="assets/images/whatsapp-call-icon.svg" alt="WhatsApp" class="h-9 w-9">
         </a>
 
@@ -348,236 +326,58 @@
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center mb-12">
                     <h2 class="text-4xl font-bold">منتجاتنا</h2>
-                    <a href="#"
+                    <a href="{{ route('web.products') }}"
                         class="border border-[#306A8E] text-[#1E2A38] px-6 py-2 rounded-lg flex items-center">
                         <span>عـرض الـكل</span>
-                        <img src="assets/images/arrow-right-icon.svg" class="h-4 w-4 mr-2" alt="">
+                        <img src="{{ asset('assets/images/arrow-right-icon.svg') }}" class="h-4 w-4 mr-2"
+                            alt="">
                     </a>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Product Cards -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
-                        <img src="assets/images/product-1.png" class="w-full h-72 object-cover rounded-2xl"
-                            alt="Product 1">
-                        <div class="p-6 text-right">
-                            <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div
-                                        class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            3000
-                                            <img src="assets/images/suadi-symbol.svg" alt="رمز الريال السعودي"
-                                                class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> للطن</span>
+                    @foreach ($products as $product)
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
+                            @php
+                                $image = $product->getFirstMediaUrl('gallery') ?: asset('assets/images/product-2.png');
+                            @endphp
+                            <img src="{{ $image }}" class="w-full h-72 object-cover rounded-2xl"
+                                alt="{{ $product->name }}">
+                            <div class="p-6 text-right">
+                                <div class="mb-5">
+                                    <div class="flex justify-end mb-3">
+                                        <div
+                                            class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
+                                            <span class="font-bold text-xl flex items-center gap-x-1">
+                                                {{ $product->price }}
+                                                <img src="{{ asset('assets/images/suadi-symbol.svg') }}"
+                                                    alt="رمز الريال السعودي" class="h-6 w-6 inline-block" />
+                                                /
+                                            </span>
+                                            <span class="text-base font-medium text-gray-700"> {{ $product->unit }}
+                                            </span>
+                                        </div>
                                     </div>
+                                    <h3 class="text-2xl font-bold text-[#1E2A38]">{{ $product->name }}</h3>
                                 </div>
-                                <h3 class="text-2xl font-bold text-[#1E2A38]">حديد الجزيرة</h3>
-                            </div>
-                            <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">خشب روسي طبيعي
-                                عالي الكثافة مصنوع من ألياف الخشب المضغوطة مع راتنجات حرارية.</p>
-                            <div class="mt-6 text-left">
-                                <a href="#"
-                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
-                                    <span>عـرض التفاصــيل</span>
-                                    <span class="inline-flex items-center justify-center rounded-full bg-white"
-                                        style="width: 32px; height: 32px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                            viewBox="0 0 24 24" stroke="#306A8E" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                                        </svg>
-                                    </span>
-                                </a>
+                                <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">
+                                    {{ $product->description }}</p>
+                                <div class="mt-6 text-left">
+                                    <a href="{{ route('web.product.details', $product->id) }}"
+                                        class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
+                                        <span>عـرض التفاصــيل</span>
+                                        <span class="inline-flex items-center justify-center rounded-full bg-white"
+                                            style="width: 32px; height: 32px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                viewBox="0 0 24 24" stroke="#306A8E" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
-                        <img src="assets/images/product-2.png" class="w-full h-72 object-cover  rounded-2xl"
-                            alt="Product 2">
-                        <div class="p-6 text-right">
-                            <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div
-                                        class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            8000
-                                            <img src="assets/images/suadi-symbol.svg" alt="رمز الريال السعودي"
-                                                class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> للطن</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-bold text-[#1E2A38]">خشب بلايوود مدهون صيني</h3>
-                            </div>
-                            <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">خشب روسي طبيعي
-                                عالي الكثافة مصنوع من ألياف الخشب المضغوطة مع راتنجات حرارية.</p>
-                            <div class="mt-6 text-left">
-                                <a href="#"
-                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
-                                    <span>عـرض التفاصــيل</span>
-                                    <span class="inline-flex items-center justify-center rounded-full bg-white"
-                                        style="width: 32px; height: 32px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                            viewBox="0 0 24 24" stroke="#306A8E" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
-                        <img src="assets/images/product-3.png" class="w-full h-72 object-cover  rounded-2xl"
-                            alt="Product 3">
-                        <div class="p-6 text-right">
-                            <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div
-                                        class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            2000
-                                            <img src="assets/images/suadi-symbol.svg" alt="رمز الريال السعودي"
-                                                class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> للطن</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-bold text-[#1E2A38]">الخشب الرقائقي العادي</h3>
-                            </div>
-                            <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">خشب روسي طبيعي
-                                عالي الكثافة مصنوع من ألياف الخشب المضغوطة مع راتنجات حرارية.</p>
-                            <div class="mt-6 text-left">
-                                <a href="#"
-                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
-                                    <span>عـرض التفاصــيل</span>
-                                    <span class="inline-flex items-center justify-center rounded-full bg-white"
-                                        style="width: 32px; height: 32px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                            viewBox="0 0 24 24" stroke="#306A8E" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
-                        <img src="assets/images/product-4.png" class="w-full h-72 object-cover  rounded-2xl"
-                            alt="Product 4">
-                        <div class="p-6 text-right">
-                            <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div
-                                        class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            4000
-                                            <img src="assets/images/suadi-symbol.svg" alt="رمز الريال السعودي"
-                                                class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> للطن</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-bold text-[#1E2A38]">إم أند إرم وود</h3>
-                            </div>
-                            <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">خشب روسي طبيعي
-                                عالي الكثافة مصنوع من ألياف الخشب المضغوطة مع راتنجات حرارية.</p>
-                            <div class="mt-6 text-left">
-                                <a href="#"
-                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
-                                    <span>عـرض التفاصــيل</span>
-                                    <span class="inline-flex items-center justify-center rounded-full bg-white"
-                                        style="width: 32px; height: 32px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                            viewBox="0 0 24 24" stroke="#306A8E" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
-                        <img src="assets/images/product-5.png" class="w-full h-72 object-cover  rounded-2xl"
-                            alt="Product 5">
-                        <div class="p-6 text-right">
-                            <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div
-                                        class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            8000
-                                            <img src="assets/images/suadi-symbol.svg" alt="رمز الريال السعودي"
-                                                class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> للطن</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-bold text-[#1E2A38]">خشب بلايوود مدهون صيني</h3>
-                            </div>
-                            <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">خشب روسي طبيعي
-                                عالي الكثافة مصنوع من ألياف الخشب المضغوطة مع راتنجات حرارية.</p>
-                            <div class="mt-6 text-left">
-                                <a href="#"
-                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
-                                    <span>عـرض التفاصــيل</span>
-                                    <span class="inline-flex items-center justify-center rounded-full bg-white"
-                                        style="width: 32px; height: 32px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                            viewBox="0 0 24 24" stroke="#306A8E" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
-                        <img src="assets/images/product-6.png" class="w-full h-72 object-cover  rounded-2xl"
-                            alt="Product 6">
-                        <div class="p-6 text-right">
-                            <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div
-                                        class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            200
-                                            <img src="assets/images/suadi-symbol.svg" alt="رمز الريال السعودي"
-                                                class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> للطن</span>
-                                    </div>
-                                </div>
-                                <h3 class="text-2xl font-bold text-[#1E2A38]">قفازات الأمان</h3>
-                            </div>
-                            <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">خشب روسي طبيعي
-                                عالي الكثافة مصنوع من ألياف الخشب المضغوطة مع راتنجات حرارية.</p>
-                            <div class="mt-6 text-left">
-                                <a href="#"
-                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
-                                    <span>عـرض التفاصــيل</span>
-                                    <span class="inline-flex items-center justify-center rounded-full bg-white"
-                                        style="width: 32px; height: 32px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                            viewBox="0 0 24 24" stroke="#306A8E" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -598,7 +398,7 @@
 
                 <!-- The container that hides the overflowing content -->
                 <div class="relative overflow-hidden w-full"
-                    style="background-image: url('assets/images/clients-background.svg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                    style="background-image: url('{{ asset('assets/images/clients-background.svg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 
                     <!-- The flex container that will be animated by the 'animate-marquee' class -->
                     <div class="flex py-12"
@@ -607,43 +407,53 @@
                         <!-- Group 1: The original set of logos -->
                         <div class="marquee-group"
                             style="display: flex; gap: 0; flex-shrink: 0; align-items: center; min-width: 100%;">
-                            <img src="assets/images/saudi-sports-ministry-logo.png" class="h-20 mx-4"
+                            <img src="{{ asset('assets/images/saudi-sports-ministry-logo.png') }}" class="h-20 mx-4"
                                 alt="Ministry of Sports">
-                            <img src="assets/images/sdaia-logo.png" class="h-20 mx-4" alt="SDAIA">
-                            <img src="assets/images/alrajhi-bank-logo.png" class="h-20 mx-4" alt="Al Rajhi Bank">
-                            <img src="assets/images/saudi-energy-ministry-logo.png" class="h-20 mx-4"
+                            <img src="{{ asset('assets/images/sdaia-logo.png') }}" class="h-20 mx-4" alt="SDAIA">
+                            <img src="{{ asset('assets/images/alrajhi-bank-logo.png') }}" class="h-20 mx-4"
+                                alt="Al Rajhi Bank">
+                            <img src="{{ asset('assets/images/saudi-energy-ministry-logo.png') }}" class="h-20 mx-4"
                                 alt="Ministry of Energy">
-                            <img src="assets/images/monshaat-logo.png" class="h-20 mx-4" alt="Monshaat">
-                            <img src="assets/images/saudi-media-ministry-logo.png" class="h-20 mx-4"
+                            <img src="{{ asset('assets/images/monshaat-logo.png') }}" class="h-20 mx-4"
+                                alt="Monshaat">
+                            <img src="{{ asset('assets/images/saudi-media-ministry-logo.png') }}" class="h-20 mx-4"
                                 alt="Ministry of Media">
-                            <img src="assets/images/dga-logo.png" class="h-20 mx-4" alt="DGA">
-                            <img src="assets/images/etimad-logo.png" class="h-20 mx-4" alt="Etimad">
-                            <img src="assets/images/gaomr-logo.png" class="h-20 mx-4" alt="GAOMR">
-                            <img src="assets/images/gov-sa-logo.png" class="h-20 mx-4" alt="GOV.SA">
-                            <img src="assets/images/sabq-logo.png" class="h-20 mx-4" alt="Sabq">
-                            <img src="assets/images/thiqah-logo.png" class="h-20 mx-4" alt="Thiqah">
-                            <img src="assets/images/moe-logo.png" class="h-20 mx-4" alt="MOE">
+                            <img src="{{ asset('assets/images/dga-logo.png') }}" class="h-20 mx-4" alt="DGA">
+                            <img src="{{ asset('assets/images/etimad-logo.png') }}" class="h-20 mx-4"
+                                alt="Etimad">
+                            <img src="{{ asset('assets/images/gaomr-logo.png') }}" class="h-20 mx-4" alt="GAOMR">
+                            <img src="{{ asset('assets/images/gov-sa-logo.png') }}" class="h-20 mx-4"
+                                alt="GOV.SA">
+                            <img src="{{ asset('assets/images/sabq-logo.png') }}" class="h-20 mx-4" alt="Sabq">
+                            <img src="{{ asset('assets/images/thiqah-logo.png') }}" class="h-20 mx-4"
+                                alt="Thiqah">
+                            <img src="{{ asset('assets/images/moe-logo.png') }}" class="h-20 mx-4" alt="MOE">
                         </div>
 
                         <!-- Group 2: The duplicated set of logos, crucial for the seamless effect -->
                         <div class="marquee-group" aria-hidden="true"
                             style="display: flex; gap: 0; flex-shrink: 0; align-items: center; min-width: 100%;">
-                            <img src="assets/images/saudi-sports-ministry-logo.png" class="h-20 mx-4"
+                            <img src="{{ asset('assets/images/saudi-sports-ministry-logo.png') }}" class="h-20 mx-4"
                                 alt="Ministry of Sports">
-                            <img src="assets/images/sdaia-logo.png" class="h-20 mx-4" alt="SDAIA">
-                            <img src="assets/images/alrajhi-bank-logo.png" class="h-20 mx-4" alt="Al Rajhi Bank">
-                            <img src="assets/images/saudi-energy-ministry-logo.png" class="h-20 mx-4"
+                            <img src="{{ asset('assets/images/sdaia-logo.png') }}" class="h-20 mx-4" alt="SDAIA">
+                            <img src="{{ asset('assets/images/alrajhi-bank-logo.png') }}" class="h-20 mx-4"
+                                alt="Al Rajhi Bank">
+                            <img src="{{ asset('assets/images/saudi-energy-ministry-logo.png') }}" class="h-20 mx-4"
                                 alt="Ministry of Energy">
-                            <img src="assets/images/monshaat-logo.png" class="h-20 mx-4" alt="Monshaat">
-                            <img src="assets/images/saudi-media-ministry-logo.png" class="h-20 mx-4"
+                            <img src="{{ asset('assets/images/monshaat-logo.png') }}" class="h-20 mx-4"
+                                alt="Monshaat">
+                            <img src="{{ asset('assets/images/saudi-media-ministry-logo.png') }}" class="h-20 mx-4"
                                 alt="Ministry of Media">
-                            <img src="assets/images/dga-logo.png" class="h-20 mx-4" alt="DGA">
-                            <img src="assets/images/etimad-logo.png" class="h-20 mx-4" alt="Etimad">
-                            <img src="assets/images/gaomr-logo.png" class="h-20 mx-4" alt="GAOMR">
-                            <img src="assets/images/gov-sa-logo.png" class="h-20 mx-4" alt="GOV.SA">
-                            <img src="assets/images/sabq-logo.png" class="h-20 mx-4" alt="Sabq">
-                            <img src="assets/images/thiqah-logo.png" class="h-20 mx-4" alt="Thiqah">
-                            <img src="assets/images/moe-logo.png" class="h-20 mx-4" alt="MOE">
+                            <img src="{{ asset('assets/images/dga-logo.png') }}" class="h-20 mx-4" alt="DGA">
+                            <img src="{{ asset('assets/images/etimad-logo.png') }}" class="h-20 mx-4"
+                                alt="Etimad">
+                            <img src="{{ asset('assets/images/gaomr-logo.png') }}" class="h-20 mx-4" alt="GAOMR">
+                            <img src="{{ asset('assets/images/gov-sa-logo.png') }}" class="h-20 mx-4"
+                                alt="GOV.SA">
+                            <img src="{{ asset('assets/images/sabq-logo.png') }}" class="h-20 mx-4" alt="Sabq">
+                            <img src="{{ asset('assets/images/thiqah-logo.png') }}" class="h-20 mx-4"
+                                alt="Thiqah">
+                            <img src="{{ asset('assets/images/moe-logo.png') }}" class="h-20 mx-4" alt="MOE">
                         </div>
 
                     </div>
@@ -661,7 +471,7 @@
                         <h2 class="text-5xl font-bold">من نحن؟</h2>
                         <div class="w-24 h-1 bg-white/50 mt-4 mb-10"></div>
 
-                        <img src="assets/images/logo-tp.png" alt="Albain Logo" class="h-16 mb-6"
+                        <img src="{{ asset('assets/images/logo-tp.png') }}" alt="Albain Logo" class="h-16 mb-6"
                             style="filter: brightness(0) invert(1);">
 
                         <p class="text-lg leading-loose text-gray-200 mb-8">
@@ -676,7 +486,7 @@
                                     لمتطلبات مشاريعهم.</span>
                                 <div class="flex-shrink-0 mr-4 h-6 w-6 rounded-full  flex items-center justify-center">
 
-                                    <img src="assets/images/star-icon.svg" class="h-6 w-6 text-white"
+                                    <img src="{{ asset('assets/images/star-icon.svg') }}" class="h-6 w-6 text-white"
                                         alt="Technical Support Icon">
                                     <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -688,7 +498,7 @@
                                 <span class="text-gray-200">التوريد الفعّال: لضمان تسليم المواد في الوقت المحدد وفي
                                     الموقع المطلوب.</span>
                                 <div class="flex-shrink-0 mr-4 h-6 w-6 rounded-full flex items-center justify-center">
-                                    <img src="assets/images/star-icon.svg" class="h-6 w-6 text-white"
+                                    <img src="{{ asset('assets/images/star-icon.svg') }}" class="h-6 w-6 text-white"
                                         alt="Technical Support Icon">
 
                                 </div>
@@ -696,7 +506,7 @@
                             <li class="flex items-center justify-end gap-2 flex-row-reverse">
                                 <span class="text-gray-200">أسعار تنافسية: لتحقيق أفضل قيمة وجودة مقابل السعر.</span>
                                 <div class="flex-shrink-0 mr-4 h-6 w-6 rounded-full flex items-center justify-center">
-                                    <img src="assets/images/star-icon.svg" class="h-6 w-6 text-white"
+                                    <img src="{{ asset('assets/images/star-icon.svg') }}" class="h-6 w-6 text-white"
                                         alt="Technical Support Icon">
 
                                 </div>
@@ -711,8 +521,8 @@
                             <div class="p-8 rounded-2xl text-center" style=" border: 1px solid #456c80;">
                                 <div
                                     class="mx-auto h-20 w-20 rounded-full flex items-center justify-center mb-6 bg-white">
-                                    <img src="assets/images/building-materials-icon.svg" class="h-10 w-10"
-                                        alt="Building Materials Icon">
+                                    <img src="{{ asset('assets/images/building-materials-icon.svg') }}"
+                                        class="h-10 w-10" alt="Building Materials Icon">
                                 </div>
                                 <h3 class="font-bold text-xl text-white mb-3">مواد بناء موثوقة</h3>
                                 <p class="text-gray-300 leading-relaxed">منتجاتنا معتمدة وذات جودة عالية تلبي متطلبات
@@ -721,8 +531,8 @@
                             <div class="p-8 rounded-2xl text-center" style=" border: 1px solid #456c80;">
                                 <div class="mx-auto h-20 w-20 rounded-full flex items-center justify-center mb-6"
                                     style="background-color: #4f77a2;">
-                                    <img src="assets/images/truck-icon.svg" class="h-10 w-10" alt="Truck Icon"
-                                        style="filter: brightness(0) invert(1);">
+                                    <img src="{{ asset('assets/images/truck-icon.svg') }}" class="h-10 w-10"
+                                        alt="Truck Icon" style="filter: brightness(0) invert(1);">
                                 </div>
                                 <h3 class="font-bold text-xl text-white mb-3">التوريد الفعال</h3>
                                 <p class="text-gray-300 leading-relaxed">نوصّل طلباتك بسرعة وبدقة، مع نظام متابعة يضمن
@@ -737,8 +547,9 @@
                             <div class="p-8 rounded-2xl text-center" style="border: 1px solid #456c80;">
                                 <div class="mx-auto h-20 w-20 rounded-full flex items-center justify-center mb-6"
                                     style="background-color: #d4a03c;">
-                                    <img src="assets/images/technical-support-icon.svg" class="h-10 w-10"
-                                        alt="Technical Support Icon" style="filter: brightness(0) invert(1);">
+                                    <img src="{{ asset('assets/images/technical-support-icon.svg') }}"
+                                        class="h-10 w-10" alt="Technical Support Icon"
+                                        style="filter: brightness(0) invert(1);">
                                 </div>
                                 <h3 class="font-bold text-xl text-white mb-3">الاستشارات الفنية</h3>
                                 <p class="text-gray-300 leading-relaxed">فريق متخصص يساعدك في اختيار المواد المناسبة
@@ -747,7 +558,7 @@
                             <div class="p-8 rounded-2xl text-center" style=" border: 1px solid #456c80;">
                                 <div class="mx-auto h-20 w-20 rounded-full flex items-center justify-center mb-6"
                                     style="background-color: #6ca571;">
-                                    <img src="assets/images/money-bag-icon.svg" class="h-10 w-10"
+                                    <img src="{{ asset('assets/images/money-bag-icon.svg') }}" class="h-10 w-10"
                                         alt="Money Bag Icon" style="filter: brightness(0) invert(1);">
                                 </div>
                                 <h3 class="font-bold text-xl text-white mb-3">أسعار تنافسية</h3>
@@ -764,7 +575,7 @@
         </section>
 
         <!-- CONTACT FORM SECTION -->
-        <section class="py-20">
+        <section id="contact" class="py-20">
             <div class="container mx-auto px-4">
                 <!-- Section Title -->
                 <div class="text-center mb-12">
@@ -787,16 +598,17 @@
                                 <!-- Phone -->
                                 <div class="flex items-start gap-3">
                                     <div class="p-[2px]">
-                                        <img src="assets/images/call-icon.svg" class="h-[23px] w-[23px]"
-                                            alt="Phone Icon" style="filter: brightness(0) invert(1);">
+                                        <img src="{{ asset('assets/images/call-icon.svg') }}"
+                                            class="h-[23px] w-[23px]" alt="Phone Icon"
+                                            style="filter: brightness(0) invert(1);">
                                     </div>
                                     <div class="flex flex-col items-start flex-1">
                                         <p class="font-light text-[15px] text-[#F1F2F2] mb-1">رقم الجوال</p>
                                         <div class="flex items-center gap-2">
                                             <a href="tel:+966550335535"
                                                 class="text-[#ffffff] font-semibold text-[15px] flex items-center gap-2">
-                                                <img src="assets/images/copy-icon.svg" class="h-[19px] w-[19px]"
-                                                    alt="Copy">
+                                                <img src="{{ asset('assets/images/copy-icon.svg') }}"
+                                                    class="h-[19px] w-[19px]" alt="Copy">
                                                 +966 55 033 5535
                                             </a>
                                         </div>
@@ -806,16 +618,17 @@
                                 <!-- Email -->
                                 <div class="flex items-start gap-3">
                                     <div class="p-[2px]">
-                                        <img src="assets/images/mail-icon.svg" class="h-[23px] w-[23px]"
-                                            alt="Email Icon" style="filter: brightness(0) invert(1);">
+                                        <img src="{{ asset('assets/images/mail-icon.svg') }}"
+                                            class="h-[23px] w-[23px]" alt="Email Icon"
+                                            style="filter: brightness(0) invert(1);">
                                     </div>
                                     <div class="flex flex-col items-start flex-1">
                                         <p class="font-light text-[15px] text-[#F1F2F2] mb-1">البريد الالكتروني</p>
                                         <div class="flex items-center gap-2">
                                             <a href="mailto:Info@albainco.com"
                                                 class="text-[#ffffff] font-semibold text-[15px] flex items-center gap-2">
-                                                <img src="assets/images/copy-icon.svg" class="h-[19px] w-[19px]"
-                                                    alt="Copy">
+                                                <img src="{{ asset('assets/images/copy-icon.svg') }}"
+                                                    class="h-[19px] w-[19px]" alt="Copy">
                                                 Info@albainco.com
                                             </a>
                                         </div>
@@ -825,16 +638,17 @@
                                 <!-- Location -->
                                 <div class="flex items-start gap-3">
                                     <div class="p-[2px]">
-                                        <img src="assets/images/location-icon.svg" class="h-[23px] w-[23px]"
-                                            alt="Location Icon" style="filter: brightness(0) invert(1);">
+                                        <img src="{{ asset('assets/images/location-icon.svg') }}"
+                                            class="h-[23px] w-[23px]" alt="Location Icon"
+                                            style="filter: brightness(0) invert(1);">
                                     </div>
                                     <div class="flex flex-col items-start flex-1">
                                         <p class="font-light text-[15px] text-[#F1F2F2] mb-1">الموقع</p>
                                         <div class="flex items-center gap-2">
                                             <a href="#"
                                                 class="text-[#ffffff] font-semibold text-[15px] flex items-center gap-2 leading-relaxed">
-                                                <img src="assets/images/link-icon.svg" class="h-[19px] w-[19px]"
-                                                    alt="Link">
+                                                <img src="{{ asset('assets/images/link-icon.svg') }}"
+                                                    class="h-[19px] w-[19px]" alt="Link">
                                                 الرياض،<br>قرطبة، طريق الثمامة
                                             </a>
                                         </div>
@@ -849,16 +663,19 @@
                                 <h4 class="font-medium text-[17px] text-[#F1F2F2]">تابعنا على</h4>
                                 <div class="flex flex-row-reverse gap-2">
                                     <a href="#" class="text-[#F1F2F2] hover:text-white transition-colors">
-                                        <img src="assets/images/twitter-icon.svg" class="h-[23px] w-[23px]"
-                                            alt="Twitter" style="filter: brightness(0) invert(1);">
+                                        <img src="{{ asset('assets/images/twitter-icon.svg') }}"
+                                            class="h-[23px] w-[23px]" alt="Twitter"
+                                            style="filter: brightness(0) invert(1);">
                                     </a>
                                     <a href="#" class="text-[#F1F2F2] hover:text-white transition-colors">
-                                        <img src="assets/images/linkedin-icon.svg" class="h-[23px] w-[23px]"
-                                            alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                                        <img src="{{ asset('assets/images/linkedin-icon.svg') }}"
+                                            class="h-[23px] w-[23px]" alt="LinkedIn"
+                                            style="filter: brightness(0) invert(1);">
                                     </a>
                                     <a href="#" class="text-[#F1F2F2] hover:text-white transition-colors">
-                                        <img src="assets/images/instagram-icon.svg" class="h-[23px] w-[23px]"
-                                            alt="Instagram" style="filter: brightness(0) invert(1);">
+                                        <img src="{{ asset('assets/images/instagram-icon.svg') }}"
+                                            class="h-[23px] w-[23px]" alt="Instagram"
+                                            style="filter: brightness(0) invert(1);">
                                     </a>
                                 </div>
                             </div>
@@ -867,20 +684,22 @@
 
                     <!-- Form Section (Left side in RTL) -->
                     <div class="w-full lg:w-9/12 bg-[#F8F8F8] rounded-[23px] p-14">
-                        <form class="space-y-8">
+                        <form class="space-y-8" method="POST" action="{{ route('web.inquiry.store') }}">
+                            @csrf
                             <!-- First Row: Name and Phone -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-3">
                                     <label for="name"
                                         class="block text-[#1A1A1A] text-[16px] font-medium text-right">الاسم</label>
-                                    <input type="text" id="name" placeholder="ادخل الاسم"
+                                    <input type="text" id="name" name="name" placeholder="ادخل الاسم"
                                         class="block w-full bg-white border-0 rounded-[12px] py-4 px-4 text-[#1A1A1A] text-[15px] leading-tight focus:outline-none focus:ring-2 focus:ring-[#306A8E] text-right shadow-sm">
                                 </div>
                                 <div class="space-y-3">
                                     <label for="phone"
                                         class="block text-[#1A1A1A] text-[16px] font-medium text-right">رقم
                                         الجوال</label>
-                                    <input type="tel" id="phone" placeholder="ادخل رقم الجوال"
+                                    <input type="tel" id="phone" name="phone"
+                                        placeholder="ادخل رقم الجوال"
                                         class="block w-full bg-white border-0 rounded-[12px] py-4 px-4 text-[#1A1A1A] text-[15px] leading-tight focus:outline-none focus:ring-2 focus:ring-[#306A8E] text-right shadow-sm">
                                 </div>
                             </div>
@@ -891,13 +710,14 @@
                                     <label for="email"
                                         class="block text-[#1A1A1A] text-[16px] font-medium text-right">البريد
                                         الالكتروني</label>
-                                    <input type="email" id="email" placeholder="ادخل البريد الالكتروني"
+                                    <input type="email" id="email" name="email"
+                                        placeholder="ادخل البريد الالكتروني"
                                         class="block w-full bg-white border-0 rounded-[12px] py-4 px-4 text-[#1A1A1A] text-[15px] leading-tight focus:outline-none focus:ring-2 focus:ring-[#306A8E] text-right shadow-sm">
                                 </div>
                                 <div class="space-y-3">
                                     <label for="subject"
                                         class="block text-[#1A1A1A] text-[16px] font-medium text-right">الموضوع</label>
-                                    <input type="text" id="subject" placeholder="ادخل الموضوع"
+                                    <input type="text" id="subject" name="subject" placeholder="ادخل الموضوع"
                                         class="block w-full bg-white border-0 rounded-[12px] py-4 px-4 text-[#1A1A1A] text-[15px] leading-tight focus:outline-none focus:ring-2 focus:ring-[#306A8E] text-right shadow-sm">
                                 </div>
                             </div>
@@ -906,7 +726,7 @@
                             <div class="space-y-3">
                                 <label for="message"
                                     class="block text-[#1A1A1A] text-[16px] font-medium text-right">الرسالة</label>
-                                <textarea id="message" placeholder="ادخل الرسالة" rows="5"
+                                <textarea id="message" name="message" placeholder="ادخل الرسالة" rows="5"
                                     class="block w-full bg-white border-0 rounded-[12px] py-4 px-4 text-[#1A1A1A] text-[15px] leading-tight focus:outline-none focus:ring-2 focus:ring-[#306A8E] text-right resize-none shadow-sm"></textarea>
                             </div>
 
@@ -915,7 +735,8 @@
                                 <button type="submit"
                                     class="bg-[#306A8E] text-white text-[18px] font-medium rounded-[12px] px-16 py-4 flex items-center gap-3 hover:bg-[#2a5f7a] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                                     ارسال
-                                    <img src="public/images/send-icon.svg" alt="Send" class="w-5 h-5">
+                                    <img src="{{ asset('assets/images/send-icon.svg') }}" alt="Send"
+                                        class="w-5 h-5">
                                 </button>
                             </div>
                         </form>
@@ -942,19 +763,19 @@
                         </p>
                         <div class="flex justify-center lg:justify-start gap-3.5 flex-row-reverse">
                             <a href="#" class="block">
-                                <img src="assets/images/snapchat-logo.png" class="h-[38px] w-[38px] rounded-md"
-                                    alt="Snapchat">
+                                <img src="{{ asset('assets/images/snapchat-logo.png') }}"
+                                    class="h-[38px] w-[38px] rounded-md" alt="Snapchat">
                             </a>
                             <a href="#" class="block">
-                                <img src="assets/images/tiktok-logo.png" class="h-[38px] w-[38px] rounded-md"
-                                    alt="TikTok">
+                                <img src="{{ asset('assets/images/tiktok-logo.png') }}"
+                                    class="h-[38px] w-[38px] rounded-md" alt="TikTok">
                             </a>
                             <a href="#" class="block">
-                                <img src="assets/images/youtube-logo.svg"
+                                <img src="{{ asset('assets/images/youtube-logo.svg') }}"
                                     class="h-[38px] w-[38px] rounded-md bg-[#FFEC06] p-1" alt="YouTube">
                             </a>
                             <a href="#" class="block">
-                                <img src="assets/images/instagram-logo.svg"
+                                <img src="{{ asset('assets/images/instagram-logo.svg') }}"
                                     class="h-[38px] w-[38px] rounded-md bg-gradient-to-br from-[#FFDD55] via-[#FF543E] to-[#C837AB] p-1"
                                     alt="Instagram">
                             </a>
@@ -966,7 +787,7 @@
                         <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-20 ">
 
 
-                            <a href="#"
+                            <a href="#contact"
                                 class="text-[#394149] text-lg font-normal hover:text-[#306A8E] transition-colors"
                                 style="font-family: 'MadaniArabic-Regular';">تواصل معنا</a>
                             <a href="#"
@@ -980,7 +801,8 @@
 
                     <!-- Right Section: Logo -->
                     <div class="w-full lg:w-auto text-center lg:text-left">
-                        <img src="assets/images/logo.svg" class="h-[86px] mx-auto lg:mx-0" alt="Albain Logo">
+                        <img src="{{ asset('assets/images/logo.svg') }}" class="h-[86px] mx-auto lg:mx-0"
+                            alt="Albain Logo">
                     </div>
                 </div>
 
@@ -996,32 +818,60 @@
         </div>
     </footer>
 
+    <!-- Bottom Navigation Bar for Mobile (Figma style) -->
+    <nav class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-[33px] shadow-lg border border-gray-200 md:hidden flex justify-between items-center px-6 py-2"
+        style="width: 90%; max-width: 370px; height: 77px;">
+        <!-- About/Who We Are -->
+        <a href="#about-us" class="flex flex-col items-center flex-1 py-2 text-[#0C0C0C] font-normal"
+            style="font-family: 'MadaniArabic-Regular', sans-serif;">
+            <img src="{{ asset('assets/images/who-us-icon.svg') }}" alt="About" class="h-7 w-7 mb-1">
+            <span class="text-xs">من نحن</span>
+        </a>
+        <!-- Home (center, highlighted) -->
+        <div class="flex-1 flex justify-center">
+            <a href="{{ route('web.home') }}"
+                class="flex flex-col items-center justify-center bg-[#306A8E] rounded-[14px] px-6 py-2 shadow text-white font-bold"
+                style="font-family: 'MadaniArabic-Medium', sans-serif;">
+                <img src="{{ asset('assets/images/home-2-icon.svg') }}" alt="Home" class="h-7 w-7 mb-1">
+                <span class="text-xs">الرئيسية</span>
+            </a>
+        </div>
+        <!-- Products -->
+        <a href="{{ route('web.products') }}"
+            class="flex flex-col items-center flex-1 py-2 text-[#0C0C0C] font-normal"
+            style="font-family: 'MadaniArabic-Regular', sans-serif;">
+            <img src="{{ asset('assets/images/products-2-icon.svg') }}" alt="Products" class="h-7 w-7 mb-1">
+            <span class="text-xs">منتجاتنا</span>
+        </a>
+    </nav>
+    <!-- End Figma-style Mobile Navbar -->
+
     <!-- JAVASCRIPT -->
-    <script src="node_modules/intl-tel-input/build/js/intlTelInput.min.js"></script>
+    <script src="{{ asset('node_modules/intl-tel-input/build/js/intlTelInput.min.js') }}"></script>
     <script>
         // Mobile Menu
-        const openBtn = document.getElementById('menu-open-btn');
-        const closeBtn = document.getElementById('menu-close-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuOverlay = document.getElementById('menu-overlay');
+        // const openBtn = document.getElementById('menu-open-btn');
+        // const closeBtn = document.getElementById('menu-close-btn');
+        // const mobileMenu = document.getElementById('mobile-menu');
+        // const menuOverlay = document.getElementById('menu-overlay');
 
-        function openMenu() {
-            mobileMenu.classList.remove('-right-full');
-            mobileMenu.classList.add('right-0');
-            menuOverlay.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
+        // function openMenu() {
+        //     mobileMenu.classList.remove('-right-full');
+        //     mobileMenu.classList.add('right-0');
+        //     menuOverlay.classList.remove('hidden');
+        //     document.body.classList.add('overflow-hidden');
+        // }
 
-        function closeMenu() {
-            mobileMenu.classList.remove('right-0');
-            mobileMenu.classList.add('-right-full');
-            menuOverlay.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
+        // function closeMenu() {
+        //     mobileMenu.classList.remove('right-0');
+        //     mobileMenu.classList.add('-right-full');
+        //     menuOverlay.classList.add('hidden');
+        //     document.body.classList.remove('overflow-hidden');
+        // }
 
-        openBtn.addEventListener('click', openMenu);
-        closeBtn.addEventListener('click', closeMenu);
-        menuOverlay.addEventListener('click', closeMenu);
+        // openBtn.addEventListener('click', openMenu);
+        // closeBtn.addEventListener('click', closeMenu);
+        // menuOverlay.addEventListener('click', closeMenu);
 
         // Hero Slider
         document.addEventListener('DOMContentLoaded', () => {
@@ -1119,7 +969,7 @@
                     customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
                         return "ادخل رقم الجوال";
                     },
-                    utilsScript: "node_modules/intl-tel-input/build/js/utils.js",
+                    utilsScript: "{{ asset('node_modules/intl-tel-input/build/js/utils.js') }}",
                     // Style the dropdown to match RTL design
                     dropdownContainer: document.body
                 });
@@ -1186,6 +1036,77 @@
                 `;
                 document.head.appendChild(style);
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Product search in header
+            const headerSearchInput = document.querySelector('input[placeholder="عن ماذا تبحث"]');
+            if (!headerSearchInput) return;
+            let dropdown;
+            let debounceTimeout;
+            let lastQuery = '';
+
+            function closeDropdown() {
+                if (dropdown) {
+                    dropdown.remove();
+                    dropdown = null;
+                }
+            }
+
+            function renderDropdown(products) {
+                closeDropdown();
+                if (!products.length) return;
+                dropdown = document.createElement('div');
+                dropdown.className =
+                    'albain-search-dropdown bg-white border border-gray-200 rounded-lg shadow-lg text-right';
+                dropdown.style.maxHeight = '350px';
+                dropdown.style.overflowY = 'auto';
+                dropdown.innerHTML = products.map(product => `
+                <a href="/product/${product.id}" class="block px-4 py-3 hover:bg-gray-100 flex items-center gap-3">
+                    <img src="${product.get_first_media_url || '/assets/images/products-2-icon.svg'}" class="w-12 h-12 object-cover rounded-md border" alt="${product.name}">
+                    <div class="flex-1">
+                        <div class="font-bold text-[#1E2A38]">${product.name}</div>
+                        <div class="text-sm text-gray-600 mt-1">${product.price} ريال</div>
+                    </div>
+                </a>
+            `).join('');
+                headerSearchInput.parentNode.appendChild(dropdown);
+            }
+
+            function fetchProducts(query) {
+                fetch(`/products/ajax-search?q=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        renderDropdown(data.products.map(p => ({
+                            ...p,
+                            get_first_media_url: p.get_first_media_url ||
+                                '/assets/images/products-2-icon.svg'
+                        })));
+                    })
+                    .catch(() => {
+                        closeDropdown();
+                    });
+            }
+
+            headerSearchInput.addEventListener('input', function(e) {
+                const query = e.target.value.trim();
+                if (query === lastQuery) return;
+                lastQuery = query;
+                clearTimeout(debounceTimeout);
+                if (query.length === 0) {
+                    closeDropdown();
+                    return;
+                }
+                debounceTimeout = setTimeout(() => {
+                    fetchProducts(query);
+                }, 350);
+            });
+            document.addEventListener('click', function(e) {
+                if (dropdown && !headerSearchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                    closeDropdown();
+                }
+            });
         });
     </script>
 </body>

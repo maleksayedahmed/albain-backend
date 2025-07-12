@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone'); // contact phone
             $table->string('email'); // contact email
             $table->text('address'); // company address
+            $table->softDeletes();
             $table->timestamps();
         });
     }

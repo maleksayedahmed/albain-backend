@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name'); // product name in Arabic
             $table->text('description'); // product description
             $table->decimal('price', 10, 2); // product price
+            $table->string('unit')->nullable(); // product unit (e.g., للطن)
+            $table->softDeletes();
             $table->timestamps();
         });
     }

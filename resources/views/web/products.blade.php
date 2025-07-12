@@ -260,6 +260,11 @@
     </nav>
     <!-- End Figma-style Mobile Navbar -->
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/966550335535" target="_blank" rel="noopener"
+        class="fixed bottom-24 left-6 z-40 w-16 h-16 rounded-full bg-[#2AA25A] flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform duration-300">
+        <img src="{{ asset('assets/images/whatsapp-call-icon.svg') }}" alt="WhatsApp" class="h-9 w-9">
+    </a>
     <!-- JAVASCRIPT -->
     <script src="node_modules/intl-tel-input/build/js/intlTelInput.min.js"></script>
     <script>

@@ -57,7 +57,7 @@
                     <a href="{{ route('web.contact_us') }}"
                         class="flex bg-gradient-to-r from-[#306A8E] to-[#0E1E28] text-white px-5 py-2.5 rounded-lg items-center gap-x-2 whitespace-nowrap hover:shadow-lg transition-all duration-300">
                         <img src="assets//images/whatsapp-icon.svg" alt="WhatsApp" class="h-6 w-6">
-                        <span>تواصل معنا الآن</span>
+                           <span> اتصل بنا </span>
                     </a>
                     <div class="relative">
                         <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
@@ -172,8 +172,7 @@
 
                     <!-- Left Section: Social Media -->
                     <div class="w-full lg:w-auto mb-8 lg:mb-0 text-center lg:text-right flex flex-col items-center ">
-                        <p class="text-[#1E2A38] text-xl font-normal mb-4" style="font-family: 'Co Headline';">تتابعنا
-                            علي
+                        <p class="text-[#1E2A38] text-xl font-normal mb-4" style="font-family: 'Co Headline';">تابعنا على
                         </p>
                         <div class="flex justify-center lg:justify-start gap-3.5 flex-row-reverse">
                             <a href="#" class="block">

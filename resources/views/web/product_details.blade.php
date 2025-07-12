@@ -44,10 +44,16 @@
 
                 <!-- Left side elements -->
                 <div class="hidden md:flex items-center gap-x-4 flex-row-reverse">
-                    <a href="#"
+                    <!-- <a href="#"
                         class="flex bg-gradient-to-r from-[#306A8E] to-[#0E1E28] text-white px-5 py-2.5 rounded-lg items-center gap-x-2 whitespace-nowrap hover:shadow-lg transition-all duration-300">
                         <img src="{{ asset('assets/images/whatsapp-icon.svg') }}" alt="WhatsApp" class="h-6 w-6">
-                        <span>تواصل معنا الآن</span>
+                          <span> اتصل بنا </span>
+                    </a>     -->
+                    
+                     <a href="{{ route('web.contact_us') }}"
+                        class="flex bg-gradient-to-r from-[#306A8E] to-[#0E1E28] text-white px-5 py-2.5 rounded-lg items-center gap-x-2 whitespace-nowrap hover:shadow-lg transition-all duration-300">
+                         <img src="{{ asset('assets/images/whatsapp-icon.svg') }}" alt="WhatsApp" class="h-6 w-6">
+                          <span> اتصل بنا </span>
                     </a>
                     <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
                         <input type="text" placeholder="عن ماذا تبحث"
@@ -99,7 +105,7 @@
 
             <div class="flex-1 mb-6 lg:mb-0">
                 <img src="{{ $gallery->count() ? $gallery->first()->getUrl() : asset('assets/images/product-2.png') }}"
-                    class="w-full rounded-2xl shadow-md max-h-80 object-cover" alt="صورة المنتج الرئيسية" />
+                    class="w-full h-30 object-contain  object-center rounded-2xl" alt="صورة المنتج الرئيسية" />
             </div>
 
             <div class="flex-1 text-right">
@@ -220,7 +226,7 @@
                 <!-- Left Section: Social Media -->
                 <div class="w-full lg:w-auto mb-4 lg:mb-0 text-center lg:text-right flex flex-col items-center ">
                     <p class="text-[#1E2A38] text-lg md:text-xl font-normal mb-4" style="font-family: 'Co Headline';">
-                        تتابعنا علي</p>
+                        تابعنا على</p>
                     <div class="flex justify-center lg:justify-start gap-2 md:gap-3.5 flex-row-reverse">
                         <a href="#" class="block">
                             <img src="{{ asset('assets/images/snapchat-logo.png') }}"

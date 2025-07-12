@@ -57,7 +57,7 @@
                     <a href="#contact"
                         class="flex bg-gradient-to-r from-[#306A8E] to-[#0E1E28] text-white px-5 py-2.5 rounded-lg items-center gap-x-2 whitespace-nowrap hover:shadow-lg transition-all duration-300">
                         <img src="{{ asset('assets/images/whatsapp-icon.svg') }}" alt="WhatsApp" class="h-6 w-6">
-                        <span>تواصل معنا الآن</span>
+                            <span> اتصل بنا </span>
                     </a>
                     <div class="relative">
                         <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
@@ -127,7 +127,7 @@
                     <div id="slide-container" class="flex transition-transform duration-700 ease-in-out">
                         <!-- Slide 1 -->
                         <div class="hero-slide w-full flex-shrink-0 h-[600px] bg-cover bg-center relative"
-                            style="background-image: url('{{ asset('assets/images/hero-background.png') }}');">
+                            style="background-image: url('{{ asset('assets/images/sl1.jpg') }}');">
                             <div
                                 class="absolute inset-0 bg-gradient-to-l from-transparent via-[#2a4e62]/50 to-[#2a4e62]/80">
                             </div>
@@ -136,12 +136,12 @@
                                 <div class="max-w-2xl">
                                     <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">كل ما تحتاجه من
                                         التوريدات نوفره لك بجودة عالية وسرعة تسليم.</h1>
-                                    <p class="mt-4 text-lg text-gray-200">أدوات مكتبية • مستلزمات طبية • معدات كهربائية
-                                        • منتجات نظافة • وأكثر!</p>
+                                    <p class="mt-4 text-lg text-gray-200">
+                                        توريدات لكافة مستلزمات البناء من الأساس وحتى التشطيبات                                       </p>
                                     <div class="mt-10">
                                         <a href="#contact"
                                             class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
-                                            <span>تواصل معنا الآن</span>
+                                            <span>اطلب الآن</span>
                                             <span class="bg-[#2a4e62] rounded-full p-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -158,7 +158,7 @@
                         </div>
                         <!-- Slide 2 -->
                         <div class="hero-slide w-full flex-shrink-0 h-[600px] bg-cover bg-center relative"
-                            style="background-image: url('{{ asset('assets/images/hero-background.png') }}');">
+                            style="background-image: url('{{ asset('assets/images/sl2.jpg') }}');">
                             <div
                                 class="absolute inset-0 bg-gradient-to-l from-transparent via-[#2a4e62]/50 to-[#2a4e62]/80">
                             </div>
@@ -167,12 +167,13 @@
                                 <div class="max-w-2xl">
                                     <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">حلول متكاملة
                                         لمشاريع البناء والتشييد.</h1>
-                                    <p class="mt-4 text-lg text-gray-200">من الأساسات إلى التشطيبات، نوفر مواد بناء
+                                    <p class="mt-4 text-lg text-gray-200">  
+                                    نوفر مواد بناء
                                         موثوقة تلبي كافة المعايير.</p>
                                     <div class="mt-10">
                                         <a href="#contact"
                                             class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
-                                            <span>تواصل معنا الآن</span>
+                                            <span>اطلب الآن</span>
                                             <span class="bg-[#2a4e62] rounded-full p-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -189,21 +190,22 @@
                         </div>
                         <!-- Slide 3 -->
                         <div class="hero-slide w-full flex-shrink-0 h-[600px] bg-cover bg-center relative"
-                            style="background-image: url('{{ asset('assets/images/hero-background.png') }}');">
+                            style="background-image: url('{{ asset('assets/images/sl3.jpg') }}');">
                             <div
                                 class="absolute inset-0 bg-gradient-to-l from-transparent via-[#2a4e62]/50 to-[#2a4e62]/80">
                             </div>
                             <div
                                 class="relative z-10 h-full flex flex-col justify-center items-end text-center p-8 md:p-16">
                                 <div class="max-w-2xl">
-                                    <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">مستلزمات طبية
-                                        بمعايير عالمية.</h1>
-                                    <p class="mt-4 text-lg text-gray-200">تجهيزات عيادات ومستشفيات بأعلى جودة لضمان
-                                        سلامة المرضى والكادر الطبي.</p>
+                                    <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">
+                                        استشارات فنية 
+                                        </h1>
+                                    <p class="mt-4 text-lg text-gray-200">
+                                        فريقنا متخصص يساعدك في اختيار المواد المناسبه                                      </p>
                                     <div class="mt-10">
                                         <a href="#contact"
                                             class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
-                                            <span>تواصل معنا الآن</span>
+                                             <span>اطلب الآن</span>
                                             <span class="bg-[#2a4e62] rounded-full p-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -220,21 +222,23 @@
                         </div>
                         <!-- Slide 4 -->
                         <div class="hero-slide w-full flex-shrink-0 h-[600px] bg-cover bg-center relative"
-                            style="background-image: url('{{ asset('assets/images/hero-background.png') }}');">
+                            style="background-image: url('{{ asset('assets/images/sl4.jpg') }}');">
                             <div
                                 class="absolute inset-0 bg-gradient-to-l from-transparent via-[#2a4e62]/50 to-[#2a4e62]/80">
                             </div>
                             <div
                                 class="relative z-10 h-full flex flex-col justify-center items-end text-center p-8 md:p-16 ">
                                 <div class="max-w-2xl">
-                                    <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">أدوات مكتبية
-                                        تُلهم الإنتاجية والإبداع.</h1>
-                                    <p class="mt-4 text-lg text-gray-200">كل ما تحتاجه بيئة عملك من قرطاسية وأجهزة
-                                        لتنظيم مهامك اليومية.</p>
+                                    <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">
+                                        اسعار تنافسية
+                                         </h1>
+                                    <p class="mt-4 text-lg text-gray-200">
+                                    أفضل العروض والأسعار في السوق لمواد بناء موثوقة
+                                        </p>
                                     <div class="mt-10">
                                         <a href="#contact"
                                             class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
-                                            <span>تواصل معنا الآن</span>
+                                         <span>اطلب الآن</span>
                                             <span class="bg-[#2a4e62] rounded-full p-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -261,7 +265,7 @@
                             <div class="max-w-2xl w-full pointer-events-auto">
                                 <!-- <div class="mt-10">
                                     <a href="#" class="inline-flex items-center gap-x-3 bg-white/90 hover:bg-white text-[#2a4e62] font-bold rounded-full py-3 pr-6 pl-2 transition-all duration-300 shadow-lg">
-                                        <span>تواصل معنا الآن</span>
+                                           <span>اطلب الآن</span>
                                         <span class="bg-[#2a4e62] rounded-full p-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -340,7 +344,7 @@
                             @php
                                 $image = $product->getFirstMediaUrl('gallery') ?: asset('assets/images/product-2.png');
                             @endphp
-                            <img src="{{ $image }}" class="w-full h-72 object-cover rounded-2xl"
+                            <img src="{{ $image }}" class="w-full h-30 object-contain  object-center rounded-2xl"
                                 alt="{{ $product->name }}">
                             <div class="p-6 text-right">
                                 <div class="mb-5">
@@ -758,8 +762,8 @@
 
                     <!-- Left Section: Social Media -->
                     <div class="w-full lg:w-auto mb-8 lg:mb-0 text-center lg:text-right flex flex-col items-center ">
-                        <p class="text-[#1E2A38] text-xl font-normal mb-4" style="font-family: 'Co Headline';">تتابعنا
-                            علي
+                        <p class="text-[#1E2A38] text-xl font-normal mb-4" style="font-family: 'Co Headline';">
+                            تابعنا على
                         </p>
                         <div class="flex justify-center lg:justify-start gap-3.5 flex-row-reverse">
                             <a href="#" class="block">
@@ -789,7 +793,9 @@
 
                             <a href="#contact"
                                 class="text-[#394149] text-lg font-normal hover:text-[#306A8E] transition-colors"
-                                style="font-family: 'MadaniArabic-Regular';">تواصل معنا</a>
+                                style="font-family: 'MadaniArabic-Regular';">
+                                اطلب الآن
+                                </a>
                             <a href="#"
                                 class="text-[#394149] text-lg font-normal hover:text-[#306A8E] transition-colors"
                                 style="font-family: 'MadaniArabic-Regular';">خصوصية الاستخدام</a>

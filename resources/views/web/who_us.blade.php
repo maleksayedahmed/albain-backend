@@ -57,7 +57,7 @@
                     <a href="{{ route('web.contact_us') }}"
                         class="flex bg-gradient-to-r from-[#306A8E] to-[#0E1E28] text-white px-5 py-2.5 rounded-lg items-center gap-x-2 whitespace-nowrap hover:shadow-lg transition-all duration-300">
                         <img src="{{ asset('assets/images/whatsapp-icon.svg') }}" alt="WhatsApp" class="h-6 w-6">
-                        <span>تواصل معنا الآن</span>
+                          <span> اتصل بنا </span>
                     </a>
                     <div class="relative">
                         <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
@@ -380,7 +380,7 @@
     <section class="flex justify-center items-center py-8 pb-16 bg-white w-full">
         <div class="w-full max-w-7xl rounded-[23px] overflow-hidden   bg-white">
             <div class="w-full h-[220px] md:h-[280px]">
-                <iframe src="https://www.google.com/maps?q=24.819742,46.773478&hl=ar&z=15&output=embed" width="100%"
+                <iframe src="https://www.google.com/maps?q=24.8341279,46.7366804&hl=ar&z=15&output=embed" width="100%"
                     height="100%" style="border:0; min-height:220px;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
@@ -397,8 +397,7 @@
 
                     <!-- Left Section: Social Media -->
                     <div class="w-full lg:w-auto mb-8 lg:mb-0 text-center lg:text-right flex flex-col items-center ">
-                        <p class="text-[#1E2A38] text-xl font-normal mb-4" style="font-family: 'Co Headline';">تتابعنا
-                            علي
+                        <p class="text-[#1E2A38] text-xl font-normal mb-4" style="font-family: 'Co Headline';">تابعنا على
                         </p>
                         <div class="flex justify-center lg:justify-start gap-3.5 flex-row-reverse">
                             <a href="#" class="block">

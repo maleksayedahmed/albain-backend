@@ -1,4 +1,4 @@
-@tailwind base;
+/*@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -12,4 +12,26 @@
 
 body {
     font-family: 'Janna LT', sans-serif;
+}
+*/ 
+ /*this is new from Qussay to apply new font */
+ 
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Remove Janna LT if not used anymore
+@font-face {
+    font-family: 'Janna LT';
+    src: url('fonts/JannaLT-Regular.woff2') format('woff2'),
+         url('fonts/JannaLT-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*/
+
+body, * {
+    font-family: 'Cairo', sans-serif !important;
 }

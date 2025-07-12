@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+        'product_images' => [
+            'driver' => 'local',
+            'root' => public_path('assets/images'),
+            'url' => env('APP_URL').'/assets/images',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

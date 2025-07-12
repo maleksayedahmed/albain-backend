@@ -32,6 +32,12 @@ class Product extends Model implements HasMedia
         return $this->hasMany(ProductSpecification::class);
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('gallery')
+            ->useDisk('product_images');
+    }
+
     // If you want to relate products to categories, add a category_id to the migration and this:
     // public function category()
     // {

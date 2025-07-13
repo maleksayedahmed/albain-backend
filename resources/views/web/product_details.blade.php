@@ -1,101 +1,22 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+@extends('layouts.web')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albain</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="{{ asset('assets/styles.css') }}" rel="stylesheet">
-    <link href="{{ asset('src/styles.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('node_modules/intl-tel-input/build/css/intlTelInput.css') }}">
-    <style>
-        @keyframes marquee {
-            0% {
-                transform: translateX(0%);
-            }
+@section('title', 'تفاصيل المنتج - Albain')
 
-            100% {
-                transform: translateX(-100%);
-            }
-        }
+@section('head')
+    @parent
+    {{-- Add any page-specific styles here if needed --}}
+@endsection
 
-        .animate-marquee {
-            animation: marquee 40s linear infinite;
-        }
-
-        .marquee-group {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            min-width: 100%;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- HEADER SECTION -->
-    <header class="bg-white sticky top-0 z-50 border-b border-gray-200">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-3 flex-row-reverse">
-
-
-
-                <!-- Left side elements -->
-                <div class="hidden md:flex items-center gap-x-4 flex-row-reverse">
-                    <!-- <a href="#"
-                        class="flex bg-gradient-to-r from-[#306A8E] to-[#0E1E28] text-white px-5 py-2.5 rounded-lg items-center gap-x-2 whitespace-nowrap hover:shadow-lg transition-all duration-300">
-                        <img src="{{ asset('assets/images/whatsapp-icon.svg') }}" alt="WhatsApp" class="h-6 w-6">
-                          <span> اتصل بنا </span>
-                    </a>     -->
-                    
-                     <a href="{{ route('web.contact_us') }}"
-                        class="flex bg-gradient-to-r from-[#306A8E] to-[#0E1E28] text-white px-5 py-2.5 rounded-lg items-center gap-x-2 whitespace-nowrap hover:shadow-lg transition-all duration-300">
-                         <img src="{{ asset('assets/images/whatsapp-icon.svg') }}" alt="WhatsApp" class="h-6 w-6">
-                          <span> اتصل بنا </span>
-                    </a>
-                    <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
-                        <input type="text" placeholder="عن ماذا تبحث"
-                            class="bg-transparent focus:outline-none text-right w-48 pr-2">
-                        <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search" class="h-5 w-5">
-                    </div>
-                </div>
-
-                <!-- <div class="flex items-center   bg-gray-100 rounded-lg  py-2 ">
-                    <input type="text" placeholder="عن ماذا تبحث"
-                        class="bg-transparent focus:outline-none text-right w-48 pr-2">
-                    <img src="assets//images/search-icon.svg" alt="Search" class="h-5 w-5">
-                </div> -->
-
-                <!-- Right side elements -->
-                <div class="flex items-center gap-x-12 flex-row-reverse">
-                    <nav class="hidden md:flex items-center gap-x-8 flex-row-reverse">
-                        <a href="{{ route('web.who_us') }}"
-                            class="{{ request()->routeIs('web.who_us') ? 'text-blue-700 font-bold relative pb-2 after:content-[\'\'] after:absolute after:bottom-0 after:right-0 after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-[#29698C] after:to-[#4AA0B6]' : 'text-gray-800 hover:text-[#096B90] font-medium transition-colors' }}">من
-                            نحن</a>
-                        <a href="{{ route('web.products') }}"
-                            class="{{ request()->routeIs('web.products') ? 'text-blue-700 font-bold relative pb-2 after:content-[\'\'] after:absolute after:bottom-0 after:right-0 after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-[#29698C] after:to-[#4AA0B6]' : 'text-[#306A8E] font-bold relative pb-2 after:content-[\'\'] after:absolute after:bottom-0 after:right-0 after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-[#29698C] after:to-[#4AA0B6] hover:text-[#096B90] font-medium transition-colors' }}">منتجاتنا</a>
-                        <a href="{{ route('web.home') }}"
-                            class="{{ request()->routeIs('web.home') ? 'text-blue-700 font-bold relative pb-2 after:content-[\'\'] after:absolute after:bottom-0 after:right-0 after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-[#29698C] after:to-[#4AA0B6]' : 'text-gray-800 hover:text-[#096B90] font-medium transition-colors' }}">الرئيسية</a>
-                    </nav>
-                    <div class="flex-shrink-0">
-                        <a href="#">
-                            <img src="{{ asset('assets/images/logo.svg') }}" alt="Albain Logo" class="h-16">
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </header>
-
+@section('content')
+    {{-- All original page content goes here, unchanged --}}
+    @php
+        /* Start of original content */
+    @endphp
     <section class="container mx-auto px-4 py-8 md:py-16">
         <div class="flex flex-col lg:flex-row-reverse gap-8 lg:gap-12">
             <div class="flex flex-row lg:flex-col gap-2 md:gap-4 mb-4 lg:mb-0 justify-center lg:justify-start">
                 @foreach ($gallery as $media)
-                    <button type="button" class="focus:outline-none"
-                        onclick="openGalleryModal('{{ $media->getUrl() }}')">
+                    <button type="button" class="focus:outline-none" onclick="openGalleryModal('{{ $media->getUrl() }}')">
                         <img src="{{ $media->getUrl() }}"
                             class="w-16 h-16 md:w-24 md:h-24 object-cover rounded-lg border border-gray-200"
                             alt="صورة مصغرة" />
@@ -116,8 +37,7 @@
                 </p>
 
                 <div class="flex items-center justify-between mb-5">
-                    <div
-                        class="flex items-baseline gap-x-2 text-lg md:text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
+                    <div class="flex items-baseline gap-x-2 text-lg md:text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
                         <span class="font-bold flex items-center gap-x-1">
                             {{ $product->price }}
                             <img src="{{ asset('assets/images/suadi-symbol.svg') }}" alt="رمز الريال السعودي"
@@ -129,13 +49,13 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-3 md:gap-4 mb-8 md:mb-10">
-                    <a href="https://wa.me/966550335535"
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $companyInformation->whatsapp) }}"
                         class="flex items-center justify-center gap-2 bg-[#25D366] text-white px-4 md:px-6 py-2 md:py-3 rounded-lg text-base md:text-lg font-medium hover:bg-[#1daa53] transition-colors">
                         <img src="{{ asset('assets/images/whatsapp-call-icon.svg') }}" class="w-5 h-5 md:w-6 md:h-6"
                             alt="واتساب" />
                         تواصل للطلب
                     </a>
-                    <a href="tel:+966550335535"
+                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $companyInformation->phone) }}"
                         class="group flex items-center justify-center gap-2 border border-[#0C6D94] text-[#0C6D94] px-4 md:px-6 py-2 md:py-3 rounded-lg text-base md:text-lg font-medium hover:bg-[#306A8E] hover:text-white transition-all duration-300">
                         <img src="{{ asset('assets/images/calling.svg') }}"
                             class="w-4 h-4 md:w-5 md:h-5 block group-hover:hidden" alt="اتصال">
@@ -147,13 +67,16 @@
 
                 <div class="border-t pt-6">
                     <h2 class="text-lg md:text-xl font-bold text-[#1E2A38] mb-4">وصف المنتج</h2>
-                    <ul class="text-gray-700 space-y-2 list-disc pr-5 text-sm md:text-base">
-                        <li>سمـاكات متوفرة: 6 مم – 25 مم</li>
-                        <li>أبعاد الألواح: 122 × 244 سم</li>
-                        <li>قابل للدهان والتغليف بسهولة</li>
-                        <li>يمكن قطعه وتشكيله حسب الطلب</li>
-                        <li>مقاوم للتقـوّس والتشققات</li>
-                    </ul>
+                    @if ($product->specifications->count() > 0)
+                        <ul class="text-gray-700 space-y-2 list-disc pr-5 text-sm md:text-base">
+                            @foreach ($product->specifications as $spec)
+                                <li><span class="font-semibold">{{ $spec->specification_key }}:</span>
+                                    {{ $spec->specification_value }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <div class="text-gray-500 text-base py-4">لا توجد مواصفات لهذا المنتج</div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -215,117 +138,13 @@
             </div>
         </div>
     </section>
+    @php
+        /* End of original content */
+    @endphp
+@endsection
 
-
-
-
-    <footer class="bg-[#F9F9F9] py-8 md:py-10">
-        <div class="container mx-auto px-4 max-w-7xl">
-            <div
-                class="flex flex-col lg:flex-row-reverse flex-wrap lg:flex-nowrap justify-between items-center mb-8 gap-8 lg:gap-0">
-                <!-- Left Section: Social Media -->
-                <div class="w-full lg:w-auto mb-4 lg:mb-0 text-center lg:text-right flex flex-col items-center ">
-                    <p class="text-[#1E2A38] text-lg md:text-xl font-normal mb-4" style="font-family: 'Co Headline';">
-                        تابعنا على</p>
-                    <div class="flex justify-center lg:justify-start gap-2 md:gap-3.5 flex-row-reverse">
-                        <a href="#" class="block">
-                            <img src="{{ asset('assets/images/snapchat-logo.png') }}"
-                                class="h-8 w-8 md:h-[38px] md:w-[38px] rounded-md" alt="Snapchat">
-                        </a>
-                        <a href="#" class="block">
-                            <img src="{{ asset('assets/images/tiktok-logo.png') }}"
-                                class="h-8 w-8 md:h-[38px] md:w-[38px] rounded-md" alt="TikTok">
-                        </a>
-                        <a href="#" class="block">
-                            <img src="{{ asset('assets/images/youtube-logo.svg') }}"
-                                class="h-8 w-8 md:h-[38px] md:w-[38px] rounded-md bg-[#FFEC06] p-1" alt="YouTube">
-                        </a>
-                        <a href="#" class="block">
-                            <img src="{{ asset('assets/images/instagram-logo.svg') }}"
-                                class="h-8 w-8 md:h-[38px] md:w-[38px] rounded-md bg-gradient-to-br from-[#FFDD55] via-[#FF543E] to-[#C837AB] p-1"
-                                alt="Instagram">
-                        </a>
-                    </div>
-                </div>
-                <!-- Center Section: Quick Links -->
-                <div class="w-full lg:w-auto mb-4 lg:mb-0 text-center ">
-                    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 lg:gap-20 ">
-                        <a href="#"
-                            class="text-[#394149] text-base md:text-lg font-normal hover:text-[#306A8E] transition-colors"
-                            style="font-family: 'MadaniArabic-Regular';">تواصل معنا</a>
-                        <a href="#"
-                            class="text-[#394149] text-base md:text-lg font-normal hover:text-[#306A8E] transition-colors"
-                            style="font-family: 'MadaniArabic-Regular';">خصوصية الاستخدام</a>
-                        <a href="#"
-                            class="text-[#394149] text-base md:text-lg font-normal hover:text-[#306A8E] transition-colors"
-                            style="font-family: 'MadaniArabic-Regular';">الشروط والأحكام</a>
-                    </div>
-                </div>
-                <!-- Right Section: Logo -->
-                <div class="w-full lg:w-auto text-center lg:text-left">
-                    <img src="{{ asset('assets/images/logo.svg') }}" class="h-16 md:h-[86px] mx-auto lg:mx-0"
-                        alt="Albain Logo">
-                </div>
-            </div>
-            <div class="text-center pt-4">
-                <p class="text-[#394149] text-xs md:text-sm font-medium opacity-64" style="font-family: 'Inter';">
-                    Copyright @2025 . All rights are reserved</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bottom Navigation Bar for Mobile (Figma style) -->
-    <nav class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-[33px] shadow-lg border border-gray-200 md:hidden flex justify-between items-center px-6 py-2"
-        style="width: 90%; max-width: 370px; height: 77px;">
-        <!-- About/Who We Are -->
-        <a href="{{ route('web.who_us') }}"
-            class="flex flex-col items-center flex-1 py-2 text-[#0C0C0C] font-normal {{ request()->routeIs('web.who_us') ? 'bg-[#306A8E] text-white rounded-[14px]' : '' }}"
-            style="font-family: 'MadaniArabic-Regular', sans-serif;">
-            <img src="{{ asset('assets/images/who-us-icon.svg') }}" alt="About" class="h-7 w-7 mb-1">
-            <span class="text-xs">من نحن</span>
-        </a>
-        <!-- Home (center, highlighted) -->
-        <div class="flex-1 flex justify-center">
-            <a href="{{ route('web.home') }}"
-                class="flex flex-col items-center justify-center {{ request()->routeIs('web.home') ? 'bg-[#306A8E] text-white rounded-[14px]' : 'bg-white text-[#306A8E]' }} px-6 py-2 shadow font-bold"
-                style="font-family: 'MadaniArabic-Medium', sans-serif;">
-                <img src="{{ asset('assets/images/home-2-icon.svg') }}" alt="Home" class="h-7 w-7 mb-1">
-                <span class="text-xs">الرئيسية</span>
-            </a>
-        </div>
-        <!-- Products -->
-        <a href="{{ route('web.products') }}"
-            class="flex flex-col items-center flex-1 py-2 text-[#0C0C0C] font-normal {{ request()->routeIs('web.products') ? 'bg-[#306A8E] text-white rounded-[14px]' : '' }}"
-            style="font-family: 'MadaniArabic-Regular', sans-serif;">
-            <img src="{{ asset('assets/images/products-2-icon.svg') }}" alt="Products" class="h-7 w-7 mb-1">
-            <span class="text-xs">منتجاتنا</span>
-        </a>
-    </nav>
-    <!-- End Figma-style Mobile Navbar -->
-
-    <!-- Gallery Modal -->
-    <div id="gallery-modal"
-        class="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-70 hidden">
-        <div class="relative max-w-full max-h-full flex items-center justify-center">
-            <button onclick="closeGalleryModal()"
-                class="absolute top-2 left-2 md:top-4 md:left-4 bg-white bg-opacity-80 rounded-full p-1 md:p-2 shadow focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            <img id="gallery-modal-img" src="" alt="صورة مكبرة"
-                class="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg border-4 border-white" />
-        </div>
-    </div>
-
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/966550335535" target="_blank" rel="noopener"
-        class="fixed bottom-24 left-6 z-40 w-16 h-16 rounded-full bg-[#2AA25A] flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform duration-300">
-        <img src="{{ asset('assets/images/whatsapp-call-icon.svg') }}" alt="WhatsApp" class="h-9 w-9">
-    </a>
-
-    <!-- JAVASCRIPT -->
+@push('scripts')
+    {{-- All original scripts from the bottom of the file go here --}}
     <script src="{{ asset('node_modules/intl-tel-input/build/js/intlTelInput.min.js') }}"></script>
     <script>
         // Mobile Menu
@@ -538,6 +357,4 @@
             }
         });
     </script>
-</body>
-
-</html>
+@endpush

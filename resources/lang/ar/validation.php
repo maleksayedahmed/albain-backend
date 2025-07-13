@@ -16,5 +16,7 @@ return [
         'description' => 'الوصف',
         'image' => 'الصورة',
         'address' => 'العنوان',
+        'partner' => 'الشريك',
+        'partners' => 'الشركاء',
     ],
 ]; 

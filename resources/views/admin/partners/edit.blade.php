@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 
-@section('title', __('تعديل الاستفسار'))
-@section('page-title', __('تعديل الاستفسار'))
+@section('title', __('تعديل الشريك'))
+@section('page-title', __('تعديل الشريك'))
 
 @section('content')
     <div>
         <div class="bg-white rounded-lg shadow-sm border border-gray-200">
             <div class="px-6 py-4 border-b border-gray-200">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-gray-900">{{ __('تعديل الاستفسار:') }} {{ $inquiry->name }}</h3>
-                    <a href="{{ route('admin.inquiries.index') }}"
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('تعديل الشريك:') }} {{ $partner->name }}</h3>
+                    <a href="{{ route('admin.partners.index') }}"
                         class="text-gray-600 hover:text-gray-900 text-sm font-medium">
                         <svg class="w-4 h-4 inline-block ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -19,12 +19,14 @@
                     </a>
                 </div>
             </div>
-            <form method="POST" action="{{ route('admin.inquiries.update', $inquiry) }}" class="p-6">
+
+            <form method="POST" action="{{ route('admin.partners.update', $partner) }}" class="p-6"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                @include('admin.inquiries._form', ['inquiry' => $inquiry])
+                @include('admin.partners._form', ['partner' => $partner])
                 <div class="flex items-center justify-end space-x-4 space-x-reverse pt-6 border-t border-gray-200 mt-6">
-                    <a href="{{ route('admin.inquiries.index') }}"
+                    <a href="{{ route('admin.partners.index') }}"
                         class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         {{ __('إلغاء') }}
                     </a>
@@ -36,4 +38,4 @@
             </form>
         </div>
     </div>
-@endsection 
+@endsection

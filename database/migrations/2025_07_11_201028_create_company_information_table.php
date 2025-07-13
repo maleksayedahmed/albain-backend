@@ -16,8 +16,14 @@ return new class extends Migration
             $table->string('title'); // company name
             $table->text('description'); // company description
             $table->string('phone'); // contact phone
+            $table->string('whatsapp')->nullable(); // whatsapp number
             $table->string('email'); // contact email
             $table->text('address'); // company address
+            $table->string('twitter')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('snapchat')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -5,18 +5,25 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Slider;
+use App\Models\Partner;
+use App\Models\AboutUsFeature;
 
 class ProductController extends Controller
 {
     public function home()
     {
         $products = Product::latest()->take(6)->get();
-        return view('web.home', compact('products'));
+        $sliders = Slider::latest()->get();
+        $partners = Partner::latest()->get();
+        $aboutUsFeatures = AboutUsFeature::all();
+        $companyInformation = \App\Models\CompanyInformation::first();
+        return view('web.home', compact('products', 'sliders', 'partners', 'aboutUsFeatures', 'companyInformation'));
     }
 
     public function show($id)
     {
-        $product = \App\Models\Product::findOrFail($id);
+        $product = \App\Models\Product::with('specifications')->findOrFail($id);
         $gallery = $product->getMedia('gallery');
         $otherProducts = \App\Models\Product::where('id', '!=', $id)->latest()->take(4)->get();
         return view('web.product_details', compact('product', 'gallery', 'otherProducts'));
@@ -56,5 +63,12 @@ class ProductController extends Controller
         return response()->json([
             'products' => $products
         ]);
+    }
+
+    public function whoUs()
+    {
+        $aboutUsFeatures = AboutUsFeature::all();
+        $companyInformation = \App\Models\CompanyInformation::first();
+        return view('web.who_us', compact('aboutUsFeatures', 'companyInformation'));
     }
 } 

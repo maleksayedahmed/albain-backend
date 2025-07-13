@@ -43,6 +43,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'unit' => $request->unit,
         ]);
 
         // Save specifications
@@ -110,6 +111,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'unit' => $request->unit,
         ]);
 
         // Update specifications

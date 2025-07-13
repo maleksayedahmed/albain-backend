@@ -16,5 +16,7 @@ return [
         'description' => 'Description',
         'image' => 'Image',
         'address' => 'Address',
+        'partner' => 'Partner',
+        'partners' => 'Partners',
     ],
 ]; 

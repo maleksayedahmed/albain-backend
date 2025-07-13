@@ -71,7 +71,7 @@ class ProductSeeder extends Seeder
                 $imagePath = public_path('assets/images/product-2.png');
             }
 
-            $media = $product->addMedia($imagePath)->toMediaCollection('gallery');
+            $media = $product->addMedia($imagePath)->preservingOriginal()->toMediaCollection('gallery');
             $media->copy($product, 'thumbnail');
 
             $specs = match ($product->name) {

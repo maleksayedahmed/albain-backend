@@ -36,8 +36,8 @@
                     </div>
                 </div>
                 <div class="mr-4">
-                    <div class="text-sm font-medium text-gray-500">الفئات</div>
-                    <div class="text-2xl font-semibold text-gray-900">{{ App\Models\Category::count() }}</div>
+                    <div class="text-sm font-medium text-gray-500">السلايدرات</div>
+                    <div class="text-2xl font-semibold text-gray-900">{{ App\Models\Slider::count() }}</div>
                 </div>
             </div>
         </div>
@@ -48,7 +48,9 @@
                 <div class="flex-shrink-0">
                     <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
                         </svg>
                     </div>
                 </div>

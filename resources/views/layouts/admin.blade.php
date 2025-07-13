@@ -78,6 +78,39 @@
                         السلايدر
                     </a>
 
+                    <!-- Partners -->
+                    <a href="{{ route('admin.partners.index') }}"
+                        class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors {{ request()->routeIs('admin.partners.*') ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-700' : '' }}">
+                        <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M16 3.13a4 4 0 010 7.75M8 3.13a4 4 0 000 7.75" />
+                        </svg>
+                        {{ __('validation.attributes.partners') }}
+                    </a>
+
+
+                    <!-- About Us Content -->
+                    <a href="{{ route('admin.about_us_content.edit') }}"
+                        class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors {{ request()->routeIs('admin.about_us_content.*') ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-700' : '' }}">
+                        <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"
+                                fill="none" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8M8 12h8" />
+                        </svg>
+                        من نحن
+                    </a>
+
+                    <!-- About Us Features -->
+                    <a href="{{ route('admin.about-us-features.index') }}"
+                        class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors {{ request()->routeIs('admin.about-us-features.*') ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-700' : '' }}">
+                        <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"
+                                fill="none" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h8M12 8v8" />
+                        </svg>
+                        خصائص من نحن
+                    </a>
+
                     <!-- Company Info -->
                     <a href="{{ route('admin.company_information.edit') }}"
                         class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors {{ request()->routeIs('admin.company_information.*') ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-700' : '' }}">

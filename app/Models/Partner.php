@@ -14,4 +14,10 @@ class Partner extends Model implements HasMedia
     protected $fillable = [
         'name',
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')
+            ->useDisk('product_images');
+    }
 } 

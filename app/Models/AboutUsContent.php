@@ -18,4 +18,10 @@ class AboutUsContent extends Model
         'paragraph_3',
         'list_items',
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('icon')
+            ->useDisk('product_images');
+    }
 } 

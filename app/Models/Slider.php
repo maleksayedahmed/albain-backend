@@ -16,4 +16,10 @@ class Slider extends Model implements HasMedia
         'title',
         'description',
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')
+            ->useDisk('product_images');
+    }
 } 

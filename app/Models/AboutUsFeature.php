@@ -15,4 +15,10 @@ class AboutUsFeature extends Model implements HasMedia
         'description',
         'bg_color',
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('icon')
+            ->useDisk('product_images');
+    }
 }

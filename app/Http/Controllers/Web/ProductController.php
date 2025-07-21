@@ -29,10 +29,18 @@ class ProductController extends Controller
         return view('web.product_details', compact('product', 'gallery', 'otherProducts'));
     }
 
-    public function products()
+    public function products(Request $request)
     {
-        $products = Product::latest()->get();
-        return view('web.products', compact('products'));
+        $query = $request->input('q');
+        $products = Product::query()
+            ->when($query, function ($qB) use ($query) {
+                $qB->where('name', 'like', "%$query%")
+                    ->orWhere('description', 'like', "%$query%");
+            })
+            ->latest()
+            ->paginate(16)
+            ->appends(['q' => $query]);
+        return view('web.products', compact('products', 'query'));
     }
 
     public function index()

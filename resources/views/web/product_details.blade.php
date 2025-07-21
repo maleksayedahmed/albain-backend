@@ -16,9 +16,9 @@
         <div class="flex flex-col lg:flex-row-reverse gap-8 lg:gap-12">
             <div class="flex flex-row lg:flex-col gap-2 md:gap-4 mb-4 lg:mb-0 justify-center lg:justify-start">
                 @foreach ($gallery as $media)
-                    <button type="button" class="focus:outline-none" onclick="openGalleryModal('{{ $media->getUrl() }}')">
+                    <button type="button" class="focus:outline-none" onclick="openGalleryModal('{{ $media->getUrl() }}');">
                         <img src="{{ $media->getUrl() }}"
-                            class="w-16 h-16 md:w-24 md:h-24 object-cover rounded-lg border border-gray-200"
+                            class="gallery-thumbnail w-16 h-16 md:w-24 md:h-24 object-cover rounded-lg border border-gray-200"
                             alt="صورة مصغرة" />
                     </button>
                 @endforeach
@@ -26,7 +26,8 @@
 
             <div class="flex-1 mb-6 lg:mb-0">
                 <img src="{{ $gallery->count() ? $gallery->first()->getUrl() : asset('assets/images/product-2.png') }}"
-                    class="w-full h-30 object-contain  object-center rounded-2xl" alt="صورة المنتج الرئيسية" />
+                    class="w-full h-30 object-contain  object-center rounded-2xl" alt="صورة المنتج الرئيسية"
+                    onclick="openGalleryModal('{{ $gallery->count() ? $gallery->first()->getUrl() : asset('assets/images/product-2.png') }}');" />
             </div>
 
             <div class="flex-1 text-right">
@@ -49,7 +50,13 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-3 md:gap-4 mb-8 md:mb-10">
-                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $companyInformation->whatsapp) }}"
+                    @php
+                        $productUrl = url()->current(); // رابط المنتج الحالي
+                        $waMessage = "السلام عليكم ورحمه الله وبركاته\n\nاريد الاستفسار عن {$product->name} المعروض على متجركم الالكتروني\nأرجو التواصل معي في اقرب وقت ممكن، \nشكرا لكم\n\nرابط المنتج: {$productUrl}";
+                        $waMessageEncoded = urlencode($waMessage);
+                        $waNumber = preg_replace('/[^0-9]/', '', $companyInformation->whatsapp);
+                    @endphp
+                    <a href="https://wa.me/{{ $waNumber }}?text={{ $waMessageEncoded }}" target="_blank"
                         class="flex items-center justify-center gap-2 bg-[#25D366] text-white px-4 md:px-6 py-2 md:py-3 rounded-lg text-base md:text-lg font-medium hover:bg-[#1daa53] transition-colors">
                         <img src="{{ asset('assets/images/whatsapp-call-icon.svg') }}" class="w-5 h-5 md:w-6 md:h-6"
                             alt="واتساب" />
@@ -95,11 +102,11 @@
             <div
                 class="flex gap-4 md:gap-6 overflow-x-auto pb-4 md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible">
                 @foreach ($otherProducts as $product)
-                    <div
-                        class="flex-none w-64 md:w-auto bg-white rounded-2xl shadow-lg overflow-hidden group min-w-[16rem] md:min-w-0">
+                    <a href="{{ route('web.product.details', $product->id) }}"
+                        class="flex-none w-64 md:w-auto bg-white rounded-2xl shadow-lg overflow-hidden group flex flex-col h-full min-w-[16rem] md:min-w-0 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                         <img src="{{ $product->getFirstMediaUrl('gallery') ?: asset('assets/images/product-2.png') }}"
                             class="w-full h-72 object-cover rounded-2xl" alt="{{ $product->name }}">
-                        <div class="p-6 text-right">
+                        <div class="p-6 text-right flex flex-col flex-grow">
                             <div class="mb-5">
                                 <div class="flex justify-end mb-3">
                                     <div
@@ -114,30 +121,66 @@
                                         </span>
                                     </div>
                                 </div>
-                                <h3 class="text-2xl font-bold text-[#1E2A38]">{{ $product->name }}</h3>
+                                <h3 class="text-2xl font-bold text-[#1E2A38] group-hover:text-[#306A8E] transition-colors">
+                                    {{ $product->name }}</h3>
                             </div>
-                            <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">
-                                {{ $product->description }}</p>
-                            <div class="mt-6 text-left">
-                                <a href="{{ route('web.product.details', $product->id) }}"
-                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
+                            <p class="text-gray-600 text-base leading-relaxed mb-6 flex-grow">
+                                {{ Str::limit($product->description, 120, '...') }}</p>
+                            <div class="mt-auto text-left">
+                                <div
+                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-6 py-2 rounded-2xl text-base font-semibold gap-x-3 group-hover:bg-[#214861] transition-colors">
                                     <span>عـرض التفاصــيل</span>
                                     <span class="inline-flex items-center justify-center rounded-full bg-white"
-                                        style="width: 32px; height: 32px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                        style="width: 24px; height: 24px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                             viewBox="0 0 24 24" stroke="#306A8E" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                                         </svg>
                                     </span>
-                                </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
     </section>
+
+    <!-- Gallery Modal -->
+    <div id="gallery-modal" class="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center hidden">
+        <div class="relative max-w-4xl w-full mx-4">
+            <!-- Close button -->
+            <button onclick="closeGalleryModal()"
+                class="absolute top-4 right-4 text-white text-3xl font-bold hover:text-gray-300 z-10">&times;</button>
+
+            <!-- Navigation arrows -->
+            <button id="gallery-prev-btn" onclick="navigateGallery(-1)"
+                class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-300 z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+
+            <button id="gallery-next-btn" onclick="navigateGallery(1)"
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-300 z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+
+            <!-- Image -->
+            <img id="gallery-modal-img" src="" alt="صورة المنتج"
+                class="w-full h-auto max-h-[90vh] object-contain rounded-lg">
+
+            <!-- Image counter -->
+            <div id="gallery-counter"
+                class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full text-sm">
+                <span id="current-image-index">1</span> / <span id="total-images">1</span>
+            </div>
+        </div>
+    </div>
+
     @php
         /* End of original content */
     @endphp
@@ -147,6 +190,10 @@
     {{-- All original scripts from the bottom of the file go here --}}
     <script src="{{ asset('node_modules/intl-tel-input/build/js/intlTelInput.min.js') }}"></script>
     <script>
+        // GALLERY MODAL LOGIC - Global variables (must be first)
+        var galleryImages = [];
+        var currentGalleryIndex = 0;
+
         // Mobile Menu
         const openBtn = document.getElementById('menu-open-btn');
         const closeBtn = document.getElementById('menu-close-btn');
@@ -337,10 +384,22 @@
         });
 
         // GALLERY MODAL LOGIC
+
         function openGalleryModal(imgSrc) {
             var modal = document.getElementById('gallery-modal');
             var modalImg = document.getElementById('gallery-modal-img');
+
+            // Get all gallery images if not already loaded
+            if (galleryImages.length === 0) {
+                galleryImages = Array.from(document.querySelectorAll('.gallery-thumbnail')).map(img => img.src);
+            }
+            currentGalleryIndex = galleryImages.indexOf(imgSrc);
+
+            // Update modal image and counter
             modalImg.src = imgSrc;
+            updateGalleryCounter();
+            updateGalleryNavigation();
+
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
         }
@@ -350,10 +409,63 @@
             modal.classList.add('hidden');
             document.body.classList.remove('overflow-hidden');
         }
+
+        function navigateGallery(direction) {
+            if (galleryImages.length === 0) return;
+
+            currentGalleryIndex = (currentGalleryIndex + direction + galleryImages.length) % galleryImages.length;
+
+            var modalImg = document.getElementById('gallery-modal-img');
+            modalImg.src = galleryImages[currentGalleryIndex];
+
+            updateGalleryCounter();
+            updateGalleryNavigation();
+        }
+
+        function updateGalleryCounter() {
+            var currentIndexEl = document.getElementById('current-image-index');
+            var totalImagesEl = document.getElementById('total-images');
+
+            if (currentIndexEl && totalImagesEl) {
+                currentIndexEl.textContent = currentGalleryIndex + 1;
+                totalImagesEl.textContent = galleryImages.length;
+            }
+        }
+
+        function updateGalleryNavigation() {
+            var prevBtn = document.getElementById('gallery-prev-btn');
+            var nextBtn = document.getElementById('gallery-next-btn');
+
+            if (prevBtn && nextBtn) {
+                // Show/hide navigation buttons based on image count
+                if (galleryImages.length <= 1) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                } else {
+                    prevBtn.style.display = 'block';
+                    nextBtn.style.display = 'block';
+                }
+            }
+        }
+
         // Close modal when clicking outside the image
         document.getElementById('gallery-modal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeGalleryModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            var modal = document.getElementById('gallery-modal');
+            if (!modal.classList.contains('hidden')) {
+                if (e.key === 'ArrowLeft') {
+                    navigateGallery(-1);
+                } else if (e.key === 'ArrowRight') {
+                    navigateGallery(1);
+                } else if (e.key === 'Escape') {
+                    closeGalleryModal();
+                }
             }
         });
     </script>

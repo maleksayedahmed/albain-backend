@@ -18,6 +18,15 @@
             </div>
         </div>
         <div class="overflow-x-auto">
+            <form method="GET" class="mb-4 flex items-center gap-2">
+                <label for="status" class="text-sm font-medium">الحالة:</label>
+                <select name="status" id="status" onchange="this.form.submit()" class="border rounded px-2 py-1">
+                    <option value="">الكل</option>
+                    @foreach($statuses as $key => $label)
+                        <option value="{{ $key }}" {{ request('status') == $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </form>
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
@@ -32,6 +41,8 @@
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                             {{ __('الرسالة') }}</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            {{ __('الحالة') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                             {{ __('تاريخ الإنشاء') }}</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                             {{ __('الإجراءات') }}</th>
@@ -45,6 +56,20 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->email }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->subject }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($inquiry->message, 30) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @php
+                                    $badgeColors = [
+                                        'new' => 'bg-blue-100 text-blue-800',
+                                        'in_progress' => 'bg-yellow-100 text-yellow-800',
+                                        'resolved' => 'bg-green-100 text-green-800',
+                                        'closed' => 'bg-gray-200 text-gray-800',
+                                    ];
+                                    $color = $badgeColors[$inquiry->status] ?? 'bg-gray-100 text-gray-800';
+                                @endphp
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $color }}">
+                                    {{ $statuses[$inquiry->status] ?? $inquiry->status }}
+                                </span>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->created_at->format('Y-m-d H:i') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex items-center space-x-2 space-x-reverse">

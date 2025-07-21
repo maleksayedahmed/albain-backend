@@ -20,6 +20,10 @@ class InquiryController extends Controller
 
         Inquiry::create($request->only(['name', 'phone', 'email', 'subject', 'message']));
 
-        return back()->with('success', 'تم إرسال استفسارك بنجاح!');
+        $successMsg = 'شكرا لك<br>لقد تم ارسال طلبك بنجاح، سيتواصل معك احد موظفينا قريبا';
+        if ($request->ajax()) {
+            return response()->json(['success' => $successMsg]);
+        }
+        return back()->with('success', $successMsg);
     }
 } 

@@ -120,7 +120,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Product Cards -->
                 @foreach ($products as $product)
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden group">
+                    <a href="{{ route('web.product.details', $product->id) }}"
+                        class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                         @php
                             $image = $product->getFirstMediaUrl('gallery') ?: asset('assets/images/product-2.png');
                         @endphp
@@ -141,13 +142,14 @@
                                         </span>
                                     </div>
                                 </div>
-                                <h3 class="text-2xl font-bold text-[#1E2A38]">{{ $product->name }}</h3>
+                                <h3 class="text-2xl font-bold text-[#1E2A38] group-hover:text-[#306A8E] transition-colors">
+                                    {{ $product->name }}</h3>
                             </div>
                             <p class="text-gray-600 text-base leading-relaxed h-24 overflow-hidden">
                                 {{ $product->description }}</p>
                             <div class="mt-6 text-left">
-                                <a href="{{ route('web.product.details', $product->id) }}"
-                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 hover:bg-[#214861] transition-colors">
+                                <div
+                                    class="inline-flex items-center justify-center bg-[#306A8E] text-white px-8 py-3 rounded-2xl text-lg font-semibold gap-x-4 group-hover:bg-[#214861] transition-colors">
                                     <span>عـرض التفاصــيل</span>
                                     <span class="inline-flex items-center justify-center rounded-full bg-white"
                                         style="width: 32px; height: 32px;">
@@ -157,10 +159,10 @@
                                                 d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                                         </svg>
                                     </span>
-                                </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -335,7 +337,8 @@
                                 <div class="flex flex-col items-start flex-1">
                                     <p class="font-light text-[15px] text-[#F1F2F2] mb-1">الموقع</p>
                                     <div class="flex items-center gap-2">
-                                        <a href="#"
+                                        <a href="#" id="show-map-popup"
+                                            data-map-url="{{ $companyInformation->map_url ?? 'https://www.google.com/maps?q=24.819742,46.773478&hl=ar&z=15&output=embed' }}"
                                             class="text-[#ffffff] font-semibold text-[15px] flex items-center gap-2 leading-relaxed">
                                             <img src="{{ asset('assets/images/link-icon.svg') }}"
                                                 class="h-[19px] w-[19px]" alt="Link">

@@ -107,7 +107,8 @@
                                 <div class="flex flex-col items-start flex-1">
                                     <p class="font-light text-[15px] text-[#F1F2F2] mb-1">الموقع</p>
                                     <div class="flex items-center gap-2">
-                                        <a href="#"
+                                        <a href="#" id="show-map-popup"
+                                            data-map-url="{{ $companyInformation->map_url ?? 'https://www.google.com/maps?q=24.819742,46.773478&hl=ar&z=15&output=embed' }}"
                                             class="text-[#ffffff] font-semibold text-[15px] flex items-center gap-2 leading-relaxed">
                                             <img src="{{ asset('assets/images/link-icon.svg') }}" class="h-[19px] w-[19px]"
                                                 alt="Link">
@@ -164,7 +165,8 @@
                         <!-- Second Row: Email and Subject -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div class="space-y-3">
-                                <label for="email" class="block text-[#1A1A1A] text-[16px] font-medium text-right">البريد
+                                <label for="email"
+                                    class="block text-[#1A1A1A] text-[16px] font-medium text-right">البريد
                                     الالكتروني</label>
                                 <input type="email" id="email" name="email" placeholder="ادخل البريد الالكتروني"
                                     class="block w-full bg-white border-0 rounded-[12px] py-4 px-4 text-[#1A1A1A] text-[15px] leading-tight focus:outline-none focus:ring-2 focus:ring-[#306A8E] text-right shadow-sm">
@@ -248,123 +250,22 @@
         class="fixed bottom-24 left-6 z-40 w-16 h-16 rounded-full bg-[#2AA25A] flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform duration-300">
         <img src="{{ asset('assets/images/whatsapp-call-icon.svg') }}" alt="WhatsApp" class="h-9 w-9">
     </a>
+
 @endsection
+
+
 
 @push('scripts')
     <script src="{{ asset('node_modules/intl-tel-input/build/js/intlTelInput.min.js') }}"></script>
     <script>
-        // Mobile Menu
-        const openBtn = document.getElementById('menu-open-btn');
-        const closeBtn = document.getElementById('menu-close-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuOverlay = document.getElementById('menu-overlay');
-
-        function openMenu() {
-            mobileMenu.classList.remove('-right-full');
-            mobileMenu.classList.add('right-0');
-            menuOverlay.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-
-        function closeMenu() {
-            mobileMenu.classList.remove('right-0');
-            mobileMenu.classList.add('-right-full');
-            menuOverlay.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
-
-        openBtn.addEventListener('click', openMenu);
-        closeBtn.addEventListener('click', closeMenu);
-        menuOverlay.addEventListener('click', closeMenu);
-
-        // Hero Slider
-        document.addEventListener('DOMContentLoaded', () => {
-            const slidesContainer = document.getElementById('slide-container');
-            const slides = document.querySelectorAll('.hero-slide');
-            const nextBtn = document.getElementById('next-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const paginationDotsContainer = document.getElementById('pagination-dots');
-
-            let currentIndex = 0;
-            let autoplayInterval;
-
-            if (slides.length > 0) {
-                // Create pagination dots
-                slides.forEach((_, index) => {
-                    const dot = document.createElement('button');
-                    dot.classList.add('w-3', 'h-3', 'rounded-full', 'border', 'border-white/50',
-                        'transition-all', 'duration-300');
-                    if (index === 0) {
-                        dot.classList.add('bg-white', 'w-6', 'h-2.5');
-                        dot.classList.remove('w-3', 'h-3');
-                    }
-                    dot.addEventListener('click', () => {
-                        goToSlide(index);
-                        resetAutoplay();
-                    });
-                    paginationDotsContainer.appendChild(dot);
-                });
-
-                const dots = paginationDotsContainer.querySelectorAll('button');
-
-                function updateDots(index) {
-                    dots.forEach((dot, dotIndex) => {
-                        dot.classList.remove('bg-white', 'w-6', 'h-2.5');
-                        dot.classList.add('w-3', 'h-3');
-                        if (dotIndex === index) {
-                            dot.classList.add('bg-white', 'w-6', 'h-2.5');
-                            dot.classList.remove('w-3', 'h-3');
-                        }
-                    });
-                }
-
-                function goToSlide(index) {
-                    slidesContainer.style.transform = `translateX(${index * 100}%)`; // Positive for RTL
-                    currentIndex = index;
-                    updateDots(index);
-                }
-
-                function nextSlide() {
-                    const newIndex = (currentIndex + 1) % slides.length;
-                    goToSlide(newIndex);
-                }
-
-                function prevSlide() {
-                    const newIndex = (currentIndex - 1 + slides.length) % slides.length;
-                    goToSlide(newIndex);
-                }
-
-                function startAutoplay() {
-                    autoplayInterval = setInterval(nextSlide, 5000);
-                }
-
-                function resetAutoplay() {
-                    clearInterval(autoplayInterval);
-                    startAutoplay();
-                }
-
-                nextBtn.addEventListener('click', () => {
-                    nextSlide();
-                    resetAutoplay();
-                });
-
-                prevBtn.addEventListener('click', () => {
-                    prevSlide();
-                    resetAutoplay();
-                });
-
-                startAutoplay();
-            }
-        });
-
-        // International Phone Input
         document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form[action="{{ route('web.inquiry.store') }}"]');
             const phoneInput = document.querySelector("#phone");
-
+            let iti = null;
             if (phoneInput) {
-                const iti = window.intlTelInput(phoneInput, {
-                    initialCountry: "sa", // Default to Saudi Arabia
-                    preferredCountries: ["sa", "ae", "kw", "qa", "bh", "om"], // Gulf countries
+                iti = window.intlTelInput(phoneInput, {
+                    initialCountry: "sa",
+                    preferredCountries: ["sa", "ae", "kw", "qa", "bh", "om"],
                     separateDialCode: false,
                     formatOnDisplay: true,
                     nationalMode: true,
@@ -374,71 +275,67 @@
                         return "ادخل رقم الجوال";
                     },
                     utilsScript: "node_modules/intl-tel-input/build/js/utils.js",
-                    // Style the dropdown to match RTL design
                     dropdownContainer: document.body
                 });
-
                 // Add custom styling for RTL support
                 const dropdown = phoneInput.parentNode.querySelector('.iti__country-list');
                 if (dropdown) {
                     dropdown.style.direction = 'rtl';
                     dropdown.style.textAlign = 'right';
                 }
-
-                // Form validation on submit
-                const form = phoneInput.closest('form');
-                if (form) {
-                    form.addEventListener('submit', function(e) {
-                        e.preventDefault();
-
-                        // Validate phone number
-                        if (iti.isValidNumber()) {
-                            // Get the full international number
-                            const fullNumber = iti.getNumber();
-                            console.log("Valid phone number:", fullNumber);
-
-                            // Here you can add your form submission logic
-                            alert("تم إرسال النموذج بنجاح!");
-                        } else {
-                            alert("يرجى إدخال رقم هاتف صحيح");
-                            phoneInput.focus();
-                        }
-                    });
-                }
-
-                // Add custom CSS to override default styles for RTL
-                const style = document.createElement('style');
-                style.textContent = `
-                    .iti {
-                        width: 100% !important;
-                        direction: ltr;
+            }
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Validate phone number if intl-tel-input is used
+                    if (iti && !iti.isValidNumber()) {
+                        alert("يرجى إدخال رقم هاتف صحيح");
+                        phoneInput.focus();
+                        return;
                     }
-                    .iti__selected-flag {
-                        padding: 0 0 0 8px;
+                    const formData = new FormData(form);
+                    if (iti) {
+                        formData.set('phone', iti.getNumber());
                     }
-                    .iti__country-list {
-                        direction: rtl;
-                        text-align: right;
-                    }
-                    .iti__country-name {
-                        margin-right: 6px;
-                        margin-left: 0;
-                    }
-                    .iti__dial-code {
-                        direction: ltr;
-                    }
-                    .iti__flag-container {
-                        right: auto;
-                        left: 8px;
-                    }
-                    #phone {
-                        padding-left: 45px !important;
-                        padding-right: 12px !important;
-                        direction: ltr;
-                        text-align: left;
-                    }
-                `;
-                document.head.appendChild(style);
+                    fetch(form.action, {
+                            method: 'POST',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                            },
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Remove any existing popup
+                                const oldPopup = document.getElementById('flash-popup');
+                                if (oldPopup) oldPopup.remove();
+                                // Create the popup
+                                const popup = document.createElement('div');
+                                popup.id = 'flash-popup';
+                                popup.className =
+                                    'fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40';
+                                popup.innerHTML = `<div class="bg-white rounded-lg shadow-lg p-8 text-center max-w-xs w-full">
+                                <div class="text-2xl mb-4 text-[#306A8E]">شكرا لك</div>
+                                <div class="text-[#1A1A1A] mb-6">${data.success}</div>
+                                <button onclick=\"document.getElementById('flash-popup').remove();\" class=\"bg-[#306A8E] text-white px-6 py-2 rounded-lg hover:bg-[#2a5f7a] transition\">إغلاق</button>
+                            </div>`;
+                                document.body.appendChild(popup);
+                                setTimeout(function() {
+                                    if (popup) popup.remove();
+                                }, 5000);
+                                form.reset();
+                                if (iti) iti.setNumber('');
+                            } else if (data.errors) {
+                                // Show validation errors (optional: display nicely)
+                                alert(Object.values(data.errors).join('\n'));
+                            }
+                        })
+                        .catch(() => {
+                            alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً');
+                        });
+                });
             }
         });
     </script>

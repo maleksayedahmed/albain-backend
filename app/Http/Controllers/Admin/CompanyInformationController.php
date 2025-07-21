@@ -13,6 +13,7 @@ class CompanyInformationController extends Controller
      */
     public function edit()
     {
+        if (!can('تعديل معلومات الشركة')) abort(403);
         $company = CompanyInformation::first();
         if (!$company) {
             $company = CompanyInformation::create([
@@ -31,6 +32,7 @@ class CompanyInformationController extends Controller
      */
     public function update(Request $request)
     {
+        if (!can('تعديل معلومات الشركة')) abort(403);
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',

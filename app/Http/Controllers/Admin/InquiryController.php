@@ -11,10 +11,21 @@ class InquiryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $inquiries = Inquiry::latest()->paginate(10);
-        return view('admin.inquiries.index', compact('inquiries'));
+        if (!can('عرض استفسار')) abort(403);
+        $statuses = [
+            'new' => 'جديد',
+            'in_progress' => 'قيد المعالجة',
+            'resolved' => 'تم الحل',
+            'closed' => 'مغلق',
+        ];
+        $query = Inquiry::query();
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        $inquiries = $query->latest()->paginate(10);
+        return view('admin.inquiries.index', compact('inquiries', 'statuses'));
     }
 
     /**
@@ -22,7 +33,14 @@ class InquiryController extends Controller
      */
     public function create()
     {
-        return view('admin.inquiries.create');
+        if (!can('إضافة استفسار')) abort(403);
+        $statuses = [
+            'new' => 'جديد',
+            'in_progress' => 'قيد المعالجة',
+            'resolved' => 'تم الحل',
+            'closed' => 'مغلق',
+        ];
+        return view('admin.inquiries.create', compact('statuses'));
     }
 
     /**
@@ -30,15 +48,17 @@ class InquiryController extends Controller
      */
     public function store(Request $request)
     {
+        if (!can('إضافة استفسار')) abort(403);
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
+            'status' => 'required|in:new,in_progress,resolved,closed',
         ]);
 
-        Inquiry::create($request->only(['name', 'phone', 'email', 'subject', 'message']));
+        Inquiry::create($request->only(['name', 'phone', 'email', 'subject', 'message', 'status']));
 
         return redirect()->route('admin.inquiries.index')
             ->with('success', 'تم إنشاء الاستفسار بنجاح');
@@ -49,6 +69,7 @@ class InquiryController extends Controller
      */
     public function show(Inquiry $inquiry)
     {
+        if (!can('عرض استفسار')) abort(403);
         return view('admin.inquiries.show', compact('inquiry'));
     }
 
@@ -57,7 +78,14 @@ class InquiryController extends Controller
      */
     public function edit(Inquiry $inquiry)
     {
-        return view('admin.inquiries.edit', compact('inquiry'));
+        if (!can('تعديل استفسار')) abort(403);
+        $statuses = [
+            'new' => 'جديد',
+            'in_progress' => 'قيد المعالجة',
+            'resolved' => 'تم الحل',
+            'closed' => 'مغلق',
+        ];
+        return view('admin.inquiries.edit', compact('inquiry', 'statuses'));
     }
 
     /**
@@ -65,15 +93,17 @@ class InquiryController extends Controller
      */
     public function update(Request $request, Inquiry $inquiry)
     {
+        if (!can('تعديل استفسار')) abort(403);
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
+            'status' => 'required|in:new,in_progress,resolved,closed',
         ]);
 
-        $inquiry->update($request->only(['name', 'phone', 'email', 'subject', 'message']));
+        $inquiry->update($request->only(['name', 'phone', 'email', 'subject', 'message', 'status']));
 
         return redirect()->route('admin.inquiries.index')
             ->with('success', 'تم تحديث الاستفسار بنجاح');
@@ -84,6 +114,7 @@ class InquiryController extends Controller
      */
     public function destroy(Inquiry $inquiry)
     {
+        if (!can('حذف استفسار')) abort(403);
         $inquiry->delete();
         return redirect()->route('admin.inquiries.index')
             ->with('success', 'تم حذف الاستفسار بنجاح');

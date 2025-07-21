@@ -9,10 +9,18 @@
                     <span>اتصل بنا</span>
                 </a>
                 <div class="relative">
-                    <div class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
-                        <input type="text" placeholder="عن ماذا تبحث"
-                            class="bg-transparent focus:outline-none text-right w-48 pr-2">
-                        <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search" class="h-5 w-5">
+                    <form action="{{ route('web.products') }}" method="get"
+                        class="flex items-center bg-gray-100 rounded-lg px-3 py-2 ">
+                        <input type="text" name="q" id="ajax-search-input" placeholder="عن ماذا تبحث"
+                            class="bg-transparent focus:outline-none text-right w-48 pr-2" value="{{ request('q') }}"
+                            autocomplete="off">
+                        <button type="submit" style="background: none; border: none; padding: 0; margin: 0;">
+                            <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search" class="h-5 w-5">
+                        </button>
+                    </form>
+                    <!-- AJAX search results dropdown -->
+                    <div id="ajax-search-results"
+                        class="absolute right-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden max-h-72 overflow-y-auto text-right">
                     </div>
                 </div>
             </div>
@@ -37,3 +45,58 @@
         </div>
     </div>
 </header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('ajax-search-input');
+        const resultsBox = document.getElementById('ajax-search-results');
+        let debounceTimeout = null;
+
+        if (searchInput && resultsBox) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                clearTimeout(debounceTimeout);
+                if (query.length < 2) {
+                    resultsBox.innerHTML = '';
+                    resultsBox.classList.add('hidden');
+                    return;
+                }
+                debounceTimeout = setTimeout(function() {
+                    fetch(
+                            `{{ route('web.products.ajax_search') }}?q=${encodeURIComponent(query)}`
+                            )
+                        .then(response => response.json())
+                        .then(data => {
+                            if (Array.isArray(data.products) && data.products.length > 0) {
+                                resultsBox.innerHTML = data.products.map(item =>
+                                    `<a href="/product/${item.id}" class="block px-4 py-3 hover:bg-gray-100 border-b last:border-b-0 border-gray-100 flex items-center gap-3 text-right">
+                                        <img src="${item.get_first_media_url}" alt="${item.name}" class="w-12 h-12 object-contain rounded shadow-sm border">
+                                        <div class="flex-1">
+                                            <div class="font-bold text-base text-gray-900">${item.name}</div>
+                                            <div class="text-[#888] text-sm mt-1">${item.price} ريال</div>
+                                        </div>
+                                    </a>`
+                                ).join('');
+                                resultsBox.classList.remove('hidden');
+                            } else {
+                                resultsBox.innerHTML =
+                                    '<div class="px-4 py-2 text-gray-500">لا توجد نتائج</div>';
+                                resultsBox.classList.remove('hidden');
+                            }
+                        })
+                        .catch(() => {
+                            resultsBox.innerHTML =
+                                '<div class="px-4 py-2 text-red-500">حدث خطأ في البحث</div>';
+                            resultsBox.classList.remove('hidden');
+                        });
+                }, 300);
+            });
+            // Hide results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!resultsBox.contains(e.target) && e.target !== searchInput) {
+                    resultsBox.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>

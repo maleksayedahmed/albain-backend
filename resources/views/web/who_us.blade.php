@@ -165,7 +165,8 @@
                                 <div class="flex flex-col items-start flex-1">
                                     <p class="font-light text-[15px] text-[#F1F2F2] mb-1">الموقع</p>
                                     <div class="flex items-center gap-2">
-                                        <a href="#"
+                                        <a href="#" id="show-map-popup"
+                                            data-map-url="{{ $companyInformation->map_url ?? 'https://www.google.com/maps?q=24.819742,46.773478&hl=ar&z=15&output=embed' }}"
                                             class="text-[#ffffff] font-semibold text-[15px] flex items-center gap-2 leading-relaxed">
                                             <img src="{{ asset('assets/images/link-icon.svg') }}" class="h-[19px] w-[19px]"
                                                 alt="Link">

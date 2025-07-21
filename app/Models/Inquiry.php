@@ -34,5 +34,6 @@ class Inquiry extends Model
         'email',
         'subject',
         'message',
+        'status',
     ];
 }

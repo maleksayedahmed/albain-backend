@@ -8,13 +8,17 @@ use App\Http\Controllers\Admin\CompanyInformationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\ProductController as WebProductController;
 use App\Http\Controllers\Web\InquiryController as WebInquiryController;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
 
 Route::get('/', [WebProductController::class, 'home'])->name('web.home');
 
 Route::get('/test', [WebProductController::class, 'home'])->name('web.test');
 
 // Add products listing route if missing
-Route::get('/products', [\App\Http\Controllers\Web\ProductController::class, 'index'])->name('web.products');
+Route::get('/products', [\App\Http\Controllers\Web\ProductController::class, 'products'])->name('web.products');
 
 Route::get('/products/ajax-search', [\App\Http\Controllers\Web\ProductController::class, 'ajaxSearch'])->name('web.products.ajax_search');
 
@@ -36,6 +40,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('sliders', \App\Http\Controllers\Admin\SliderController::class);
     Route::resource('partners', \App\Http\Controllers\Admin\PartnerController::class);
     Route::resource('about-us-features', \App\Http\Controllers\Admin\AboutUsFeatureController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     Route::get('company-information/edit', [CompanyInformationController::class, 'edit'])->name('company_information.edit');
     Route::put('company-information/update', [CompanyInformationController::class, 'update'])->name('company_information.update');
     Route::get('about-us-content/edit', [\App\Http\Controllers\Admin\AboutUsContentController::class, 'edit'])->name('about_us_content.edit');

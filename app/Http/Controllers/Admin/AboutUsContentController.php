@@ -13,6 +13,7 @@ class AboutUsContentController extends Controller
      */
     public function edit()
     {
+        if (!can('تعديل محتوى من نحن')) abort(403);
         $about = AboutUsContent::first();
         if (!$about) {
             $about = AboutUsContent::create([
@@ -31,6 +32,7 @@ class AboutUsContentController extends Controller
      */
     public function update(Request $request)
     {
+        if (!can('تعديل محتوى من نحن')) abort(403);
         $request->validate([
             'section_title' => 'required|string|max:255',
             'paragraph_1' => 'required|string',

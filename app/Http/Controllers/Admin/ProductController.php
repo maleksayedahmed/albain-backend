@@ -38,8 +38,9 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gallery_images' => 'nullable|array',
+            'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $product = Product::create([
@@ -63,18 +64,19 @@ class ProductController extends Controller
             }
         }
 
-        if ($request->hasFile('images')) {
-            $images = $request->file('images');
-            // Add all images to gallery
+        // Handle thumbnail
+        if ($request->hasFile('thumbnail')) {
+            $product->addMedia($request->file('thumbnail'))->toMediaCollection('thumbnail');
+        }
+
+        // Handle gallery images
+        if ($request->hasFile('gallery_images')) {
+            $images = $request->file('gallery_images');
             foreach ($images as $image) {
                 $product->addMedia($image)->toMediaCollection('gallery');
             }
-            // Get first media from gallery and copy to thumbnail
-            $firstMedia = $product->getFirstMedia('gallery');
-            if ($firstMedia) {
-                $firstMedia->copy($product, 'thumbnail');
-            }
         }
+
         return redirect()->route('admin.products.index')
             ->with('success', 'تم إنشاء المنتج بنجاح');
     }
@@ -109,8 +111,11 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gallery_images' => 'nullable|array',
+            'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'delete_gallery_images' => 'nullable|array',
+            'delete_gallery_images.*' => 'integer|exists:media,id',
         ]);
 
         $product->update([
@@ -135,21 +140,30 @@ class ProductController extends Controller
             }
         }
 
-        if ($request->hasFile('images')) {
-            // Remove old images
+        // Handle thumbnail
+        if ($request->hasFile('thumbnail')) {
             $product->clearMediaCollection('thumbnail');
-            $product->clearMediaCollection('gallery');
-            $images = $request->file('images');
-            // Add all images to gallery
+            $product->addMedia($request->file('thumbnail'))->toMediaCollection('thumbnail');
+        }
+
+        // Handle gallery images deletion
+        if ($request->has('delete_gallery_images')) {
+            foreach ($request->delete_gallery_images as $mediaId) {
+                $media = $product->getMedia('gallery')->find($mediaId);
+                if ($media) {
+                    $media->delete();
+                }
+            }
+        }
+
+        // Handle new gallery images
+        if ($request->hasFile('gallery_images')) {
+            $images = $request->file('gallery_images');
             foreach ($images as $image) {
                 $product->addMedia($image)->toMediaCollection('gallery');
             }
-            // Get first media from gallery and copy to thumbnail
-            $firstMedia = $product->getFirstMedia('gallery');
-            if ($firstMedia) {
-                $firstMedia->copy($product, 'thumbnail');
-            }
         }
+
         return redirect()->route('admin.products.index')
             ->with('success', 'تم تحديث المنتج بنجاح');
     }

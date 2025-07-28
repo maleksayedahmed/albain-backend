@@ -65,7 +65,7 @@ class ProductController extends Controller
                 'name' => $product->name,
                 'price' => $product->price,
                 'description' => $product->description,
-                'get_first_media_url' => $product->getFirstMediaUrl('gallery') ?: asset('assets/images/products-2-icon.svg'),
+                'get_first_media_url' => $product->getFirstMediaUrl('thumbnail') ?: $product->getFirstMediaUrl('gallery') ?: asset('assets/images/products-2-icon.svg'),
             ];
         });
         return response()->json([

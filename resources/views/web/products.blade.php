@@ -31,28 +31,39 @@
                 @foreach ($products as $product)
                     <a href="{{ route('web.product.details', $product->id) }}"
                         class="bg-white rounded-2xl shadow-lg overflow-hidden group flex flex-col h-full hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                        <img src="{{ $product->getFirstMediaUrl('gallery') ?: asset('assets/images/products-2-icon.svg') }}"
-                            class="w-full h-72 object-cover rounded-2xl" alt="{{ $product->name }}">
+                        @php
+                            $image =
+                                $product->getFirstMediaUrl('thumbnail') ?:
+                                $product->getFirstMediaUrl('gallery') ?:
+                                asset('assets/images/products-2-icon.svg');
+                        @endphp
+                        <img src="{{ $image }}" class="w-full h-72 object-cover rounded-2xl flex-shrink-0"
+                            alt="{{ $product->name }}">
                         <div class="p-6 text-right flex flex-col flex-grow">
                             <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div
-                                        class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            {{ $product->price }}
-                                            <img src="{{ asset('assets/images/suadi-symbol.svg') }}"
-                                                alt="رمز الريال السعودي" class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> للطن</span>
+                                @if ($product->price > 0)
+                                    <div class="flex justify-end mb-3">
+                                        <div
+                                            class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
+                                            <span class="font-bold text-xl flex items-center gap-x-1">
+                                                {{ $product->price }}
+                                                <img src="{{ asset('assets/images/suadi-symbol.svg') }}"
+                                                    alt="رمز الريال السعودي" class="h-6 w-6 inline-block" />
+                                                /
+                                            </span>
+                                            <span class="text-base font-medium text-gray-700">
+                                                {{ $product->unit ?: 'للطن' }}</span>
+                                        </div>
                                     </div>
-                                </div>
+                                @else
+                                    <div class="h-12 mb-3"></div>
+                                @endif
                                 <h3 class="text-2xl font-bold text-[#1E2A38] group-hover:text-[#306A8E] transition-colors">
                                     {{ $product->name }}</h3>
                             </div>
-                            <p class="text-gray-600 text-base leading-relaxed mb-6 flex-grow">
+                            <p class="text-gray-600 text-base leading-relaxed flex-grow">
                                 {{ Str::limit($product->description, 120, '...') }}</p>
-                            <div class="mt-auto text-left">
+                            <div class="mt-6 text-left flex-shrink-0">
                                 <div
                                     class="inline-flex items-center justify-center bg-[#306A8E] text-white px-6 py-2 rounded-2xl text-base font-semibold gap-x-3 group-hover:bg-[#214861] transition-colors">
                                     <span>عـرض التفاصــيل</span>
@@ -106,23 +117,25 @@
                 noResults.classList.add('hidden');
                 productList.innerHTML = products.map(product => `
                     <a href="/product/${product.id}" class="bg-white rounded-2xl shadow-lg overflow-hidden group flex flex-col h-full hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                        <img src="${product.get_first_media_url || '/assets/images/products-2-icon.svg'}" class="w-full h-72 object-cover rounded-2xl" alt="${product.name}">
+                        <img src="${product.get_first_media_url || '/assets/images/products-2-icon.svg'}" class="w-full h-72 object-cover rounded-2xl flex-shrink-0" alt="${product.name}">
                         <div class="p-6 text-right flex flex-col flex-grow">
                             <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            ${product.price}
-                                            <img src="/assets/images/suadi-symbol.svg" alt="رمز الريال السعودي" class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> للطن</span>
+                                ${product.price > 0 ? `
+                                    <div class="flex justify-end mb-3">
+                                        <div class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
+                                            <span class="font-bold text-xl flex items-center gap-x-1">
+                                                ${product.price}
+                                                <img src="/assets/images/suadi-symbol.svg" alt="رمز الريال السعودي" class="h-6 w-6 inline-block" />
+                                                /
+                                            </span>
+                                            <span class="text-base font-medium text-gray-700"> للطن</span>
+                                        </div>
                                     </div>
-                                </div>
+                                    ` : '<div class="h-12 mb-3"></div>'}
                                 <h3 class="text-2xl font-bold text-[#1E2A38] group-hover:text-[#306A8E] transition-colors">${product.name}</h3>
                             </div>
-                            <p class="text-gray-600 text-base leading-relaxed mb-6 flex-grow">${product.description ? (product.description.length > 120 ? product.description.substring(0, 120) + '...' : product.description) : ''}</p>
-                            <div class="mt-auto text-left">
+                            <p class="text-gray-600 text-base leading-relaxed flex-grow">${product.description ? (product.description.length > 120 ? product.description.substring(0, 120) + '...' : product.description) : ''}</p>
+                            <div class="mt-6 text-left flex-shrink-0">
                                 <div class="inline-flex items-center justify-center bg-[#306A8E] text-white px-6 py-2 rounded-2xl text-base font-semibold gap-x-3 group-hover:bg-[#214861] transition-colors">
                                     <span>عـرض التفاصــيل</span>
                                     <span class="inline-flex items-center justify-center rounded-full bg-white" style="width: 24px; height: 24px;">

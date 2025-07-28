@@ -25,9 +25,15 @@
             </div>
 
             <div class="flex-1 mb-6 lg:mb-0">
-                <img src="{{ $gallery->count() ? $gallery->first()->getUrl() : asset('assets/images/product-2.png') }}"
-                    class="w-full h-30 object-contain  object-center rounded-2xl" alt="صورة المنتج الرئيسية"
-                    onclick="openGalleryModal('{{ $gallery->count() ? $gallery->first()->getUrl() : asset('assets/images/product-2.png') }}');" />
+                @php
+                    $mainImage =
+                        $product->getFirstMediaUrl('thumbnail') ?:
+                        ($gallery->count()
+                            ? $gallery->first()->getUrl()
+                            : asset('assets/images/product-2.png'));
+                @endphp
+                <img src="{{ $mainImage }}" class="w-full h-30 object-contain  object-center rounded-2xl"
+                    alt="صورة المنتج الرئيسية" onclick="openGalleryModal('{{ $mainImage }}');" />
             </div>
 
             <div class="flex-1 text-right">
@@ -37,17 +43,20 @@
                     {{ $product->description }}
                 </p>
 
-                <div class="flex items-center justify-between mb-5">
-                    <div class="flex items-baseline gap-x-2 text-lg md:text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                        <span class="font-bold flex items-center gap-x-1">
-                            {{ $product->price }}
-                            <img src="{{ asset('assets/images/suadi-symbol.svg') }}" alt="رمز الريال السعودي"
-                                class="h-5 w-5 md:h-6 md:w-6 inline-block" />
-                            /
-                        </span>
-                        <span class="text-xs md:text-base font-medium text-gray-700"> {{ $product->unit }}</span>
+                @if ($product->price > 0)
+                    <div class="flex items-center justify-between mb-5">
+                        <div
+                            class="flex items-baseline gap-x-2 text-lg md:text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
+                            <span class="font-bold flex items-center gap-x-1">
+                                {{ $product->price }}
+                                <img src="{{ asset('assets/images/suadi-symbol.svg') }}" alt="رمز الريال السعودي"
+                                    class="h-5 w-5 md:h-6 md:w-6 inline-block" />
+                                /
+                            </span>
+                            <span class="text-xs md:text-base font-medium text-gray-700"> {{ $product->unit }}</span>
+                        </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="flex flex-col md:flex-row gap-3 md:gap-4 mb-8 md:mb-10">
                     @php
@@ -104,29 +113,39 @@
                 @foreach ($otherProducts as $product)
                     <a href="{{ route('web.product.details', $product->id) }}"
                         class="flex-none w-64 md:w-auto bg-white rounded-2xl shadow-lg overflow-hidden group flex flex-col h-full min-w-[16rem] md:min-w-0 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                        <img src="{{ $product->getFirstMediaUrl('gallery') ?: asset('assets/images/product-2.png') }}"
-                            class="w-full h-72 object-cover rounded-2xl" alt="{{ $product->name }}">
+                        @php
+                            $image =
+                                $product->getFirstMediaUrl('thumbnail') ?:
+                                $product->getFirstMediaUrl('gallery') ?:
+                                asset('assets/images/product-2.png');
+                        @endphp
+                        <img src="{{ $image }}" class="w-full h-72 object-cover rounded-2xl flex-shrink-0"
+                            alt="{{ $product->name }}">
                         <div class="p-6 text-right flex flex-col flex-grow">
                             <div class="mb-5">
-                                <div class="flex justify-end mb-3">
-                                    <div
-                                        class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
-                                        <span class="font-bold text-xl flex items-center gap-x-1">
-                                            {{ $product->price }}
-                                            <img src="{{ asset('assets/images/suadi-symbol.svg') }}"
-                                                alt="رمز الريال السعودي" class="h-6 w-6 inline-block" />
-                                            /
-                                        </span>
-                                        <span class="text-base font-medium text-gray-700"> {{ $product->unit }}
-                                        </span>
+                                @if ($product->price > 0)
+                                    <div class="flex justify-end mb-3">
+                                        <div
+                                            class="flex items-baseline gap-x-2 text-xl font-bold bg-gray-100 rounded-2xl px-3 py-2">
+                                            <span class="font-bold text-xl flex items-center gap-x-1">
+                                                {{ $product->price }}
+                                                <img src="{{ asset('assets/images/suadi-symbol.svg') }}"
+                                                    alt="رمز الريال السعودي" class="h-6 w-6 inline-block" />
+                                                /
+                                            </span>
+                                            <span class="text-base font-medium text-gray-700"> {{ $product->unit }}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
+                                @else
+                                    <div class="h-12 mb-3"></div>
+                                @endif
                                 <h3 class="text-2xl font-bold text-[#1E2A38] group-hover:text-[#306A8E] transition-colors">
                                     {{ $product->name }}</h3>
                             </div>
-                            <p class="text-gray-600 text-base leading-relaxed mb-6 flex-grow">
+                            <p class="text-gray-600 text-base leading-relaxed flex-grow">
                                 {{ Str::limit($product->description, 120, '...') }}</p>
-                            <div class="mt-auto text-left">
+                            <div class="mt-6 text-left flex-shrink-0">
                                 <div
                                     class="inline-flex items-center justify-center bg-[#306A8E] text-white px-6 py-2 rounded-2xl text-base font-semibold gap-x-3 group-hover:bg-[#214861] transition-colors">
                                     <span>عـرض التفاصــيل</span>

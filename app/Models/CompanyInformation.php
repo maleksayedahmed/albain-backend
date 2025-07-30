@@ -31,4 +31,12 @@ class CompanyInformation extends Model implements HasMedia
         'snapchat',
         'map_url',
     ];
+
+    public function registerMediaCollections(): void
+    {
+
+            
+        $this->addMediaCollection('logo')
+            ->useDisk('product_images');
+    }
 }

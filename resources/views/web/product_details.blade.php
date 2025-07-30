@@ -171,7 +171,7 @@
         <div class="relative max-w-4xl w-full mx-4">
             <!-- Close button -->
             <button onclick="closeGalleryModal()"
-                class="absolute top-4 right-4 text-white text-3xl font-bold hover:text-gray-300 z-10">&times;</button>
+                class="absolute top-4 right-4 text-white text-3xl font-bold hover:text-gray-300 z-10 bg-black bg-opacity-50 border-2 border-white rounded-md w-8 h-8 flex items-center justify-center hover:bg-opacity-70 transition-all duration-300">&times;</button>
 
             <!-- Navigation arrows -->
             <button id="gallery-prev-btn" onclick="navigateGallery(-1)"

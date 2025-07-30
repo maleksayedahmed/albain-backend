@@ -22,9 +22,9 @@ Route::get('/products', [\App\Http\Controllers\Web\ProductController::class, 'pr
 
 Route::get('/products/ajax-search', [\App\Http\Controllers\Web\ProductController::class, 'ajaxSearch'])->name('web.products.ajax_search');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
